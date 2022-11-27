@@ -23,7 +23,12 @@ namespace Model.Recipe
         /// <param name="amount">Исходное количество</param>
         /// <param name="gain">Коэффициент изменения (0; +inf)</param>
         /// <returns></returns>
-        public abstract int ChangeAmount(uint amount, double gain);
+        public abstract uint ChangeAmount(uint amount, double gain);
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 
     /// <summary>
@@ -33,13 +38,13 @@ namespace Model.Recipe
     {
         public override string Name => "г.";
 
-        public override int ChangeAmount(uint amount, double gain)
+        public override uint ChangeAmount(uint amount, double gain)
         {
             if (gain <= 0)
             {
                 throw new ArgumentException();
             }
-            return (int)(amount * gain);
+            return (uint)(amount * gain);
         }
     }
 
@@ -50,13 +55,13 @@ namespace Model.Recipe
     {
         public override string Name => "мл.";
 
-        public override int ChangeAmount(uint amount, double gain)
+        public override uint ChangeAmount(uint amount, double gain)
         {
             if (gain <= 0)
             {
                 throw new ArgumentException();
             }
-            return (int)(amount * gain);
+            return (uint)(amount * gain);
         }
     }
 
@@ -67,13 +72,13 @@ namespace Model.Recipe
     {
         public override string Name => "шт.";
 
-        public override int ChangeAmount(uint amount, double gain)
+        public override uint ChangeAmount(uint amount, double gain)
         {
             if (gain <= 0)
             {
                 throw new ArgumentException();
             }
-            return (int)Math.Ceiling(amount * gain);
+            return (uint)Math.Ceiling(amount * gain);
         }
     }
 }
