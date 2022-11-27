@@ -6,8 +6,12 @@ using NUnit.Framework;
 
 namespace Tests
 {
+    // Тесты классов единиц измерений
+
+    // Тест класса  Gramm
     public class TestGramm
     {
+        // Проверка имени единицы измерения
         [Test]
         public void TestName()
         {
@@ -15,6 +19,7 @@ namespace Tests
             Assert.AreEqual("г.", unit.Name);
         }
 
+        // Тест, что нельзя в ChangeAmount передать отрицательный gain
         [Test]
         public void TestNegativeGain()
         {
@@ -22,6 +27,7 @@ namespace Tests
             Assert.Throws<ArgumentException>(() => unit.ChangeAmount(10, -1));
         }
 
+        // Тест уменьшения кол-ва без округления
         [Test]
         public void TestReduceNoRound()
         {
@@ -29,6 +35,7 @@ namespace Tests
             Assert.AreEqual(5, unit.ChangeAmount(10, 0.5));
         }
 
+        // Тест уменьшения кол-ва с округлением
         [Test]
         public void TestReduceRound()
         {
@@ -36,14 +43,16 @@ namespace Tests
             Assert.AreEqual(2, unit.ChangeAmount(5, 0.5));
         }
 
+        // Тест увеличения кол-ва
         [Test]
-        public void TestIncreaseRound()
+        public void TestIncrease()
         {
             var unit = new Gramm();
             Assert.AreEqual(20, unit.ChangeAmount(10, 2));
         }
     }
 
+    // Тесты класса Milliliter
     public class TestMilliliter
     {
         [Test]
@@ -75,13 +84,14 @@ namespace Tests
         }
 
         [Test]
-        public void TestIncreaseRound()
+        public void TestIncrease()
         {
             var unit = new Milliliter();
             Assert.AreEqual(20, unit.ChangeAmount(10, 2));
         }
     }
 
+    // Тесты класса Piece
     public class TestPiece
     {
         [Test]
@@ -113,7 +123,7 @@ namespace Tests
         }
 
         [Test]
-        public void TestIncreaseRound()
+        public void TestIncrease()
         {
             var unit = new Piece();
             Assert.AreEqual(20, unit.ChangeAmount(10, 2));
