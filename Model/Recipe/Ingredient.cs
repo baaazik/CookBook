@@ -12,6 +12,11 @@ namespace Model.Recipe
         public string Name { get; }
         public BaseUnit Unit { get;}
 
+        /// <summary>
+        /// Создает новый экземпляр
+        /// </summary>
+        /// <param name="name">Название ингредиента</param>
+        /// <param name="unit">Единица измерения, в которой он измеряется</param>
         public Ingredient(string name, BaseUnit unit)
         {
             Name = name;
@@ -26,17 +31,31 @@ namespace Model.Recipe
     {
         private List<Ingredient> alternatives;
 
-        public ListIngredient(string name, BaseUnit unit) : base(name, unit)
+        /// <summary>
+        /// Создает новый игредиент
+        /// </summary>
+        /// <param name="name">Название ингердиента</param>
+        /// <param name="unit">Единица измерения, в которой он измеряется</param>
+        /// <param name="alternatives">Список игредиентов, которыми его можно заменить</param>
+        public ListIngredient(string name, BaseUnit unit, List<Ingredient> alternatives) : base(name, unit)
         {
-            // TODO: надо как-то заполнять этот список, когда создаем из БД
-            alternatives = new List<Ingredient>();
+            // Если в качестве alternatives передан null, то создадим пустой список замен (т.е. замен нет). 
+            // Это упростит работу с эти классом, не нужно будет проверять на null
+            if (alternatives != null)
+            {
+                this.alternatives = alternatives;
+            }
+            else
+            {
+                this.alternatives = new List<Ingredient>();
+            }
         }
 
         /// <summary>
         /// Получить список замен
         /// </summary>
         /// <returns></returns>
-        public List<Ingredient> GetAlternatives()
+        public IReadOnlyList<Ingredient> GetAlternatives()
         {
             return alternatives;
         }
