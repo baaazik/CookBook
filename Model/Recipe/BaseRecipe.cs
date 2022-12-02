@@ -64,6 +64,11 @@ namespace Model.Recipe
             _amount = DefaultAmount;
         }
 
+        public override string ToString()
+        {
+            return $"{Name} ({Amount})";
+        }
+
         /// <summary>
         /// Возвращает список игредиентов блюда с учетом количества готового блюда
         /// </summary>

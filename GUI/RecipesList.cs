@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Data;
+using Model.Recipe;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,9 +12,21 @@ namespace GUI
 {
     public partial class RecipesList : UserControl
     {
+        IDataSource source;
+        IReadOnlyList<BaseRecipe> recipes;
+
         public RecipesList()
         {
             InitializeComponent();
+            source = new FakeData();
+
+            UpdateRecipes();
+        }
+
+        private void UpdateRecipes()
+        {
+            recipes = source.GetRecipes();
+            listBoxRecipes.DataSource = recipes;
         }
     }
 }
