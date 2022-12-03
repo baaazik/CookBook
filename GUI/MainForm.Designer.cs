@@ -33,11 +33,13 @@ namespace GUI
             this.pageRecipes = new System.Windows.Forms.TabPage();
             this.recipesList1 = new GUI.RecipesList();
             this.pageSelected = new System.Windows.Forms.TabPage();
-            this.pageShoppingList = new System.Windows.Forms.TabPage();
             this.recipesMenu1 = new GUI.RecipesMenu();
+            this.pageShoppingList = new System.Windows.Forms.TabPage();
+            this.shoppingList1 = new GUI.ShoppingList();
             this.tabControl.SuspendLayout();
             this.pageRecipes.SuspendLayout();
             this.pageSelected.SuspendLayout();
+            this.pageShoppingList.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl
@@ -86,16 +88,6 @@ namespace GUI
             this.pageSelected.Text = "Выбранные рецепты";
             this.pageSelected.UseVisualStyleBackColor = true;
             // 
-            // pageShoppingList
-            // 
-            this.pageShoppingList.Location = new System.Drawing.Point(4, 24);
-            this.pageShoppingList.Name = "pageShoppingList";
-            this.pageShoppingList.Padding = new System.Windows.Forms.Padding(3);
-            this.pageShoppingList.Size = new System.Drawing.Size(617, 398);
-            this.pageShoppingList.TabIndex = 2;
-            this.pageShoppingList.Text = "Список покупок";
-            this.pageShoppingList.UseVisualStyleBackColor = true;
-            // 
             // recipesMenu1
             // 
             this.recipesMenu1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -105,6 +97,27 @@ namespace GUI
             this.recipesMenu1.Name = "recipesMenu1";
             this.recipesMenu1.Size = new System.Drawing.Size(605, 386);
             this.recipesMenu1.TabIndex = 0;
+            // 
+            // pageShoppingList
+            // 
+            this.pageShoppingList.Controls.Add(this.shoppingList1);
+            this.pageShoppingList.Location = new System.Drawing.Point(4, 24);
+            this.pageShoppingList.Name = "pageShoppingList";
+            this.pageShoppingList.Padding = new System.Windows.Forms.Padding(3);
+            this.pageShoppingList.Size = new System.Drawing.Size(617, 398);
+            this.pageShoppingList.TabIndex = 2;
+            this.pageShoppingList.Text = "Список покупок";
+            this.pageShoppingList.UseVisualStyleBackColor = true;
+            // 
+            // shoppingList1
+            // 
+            this.shoppingList1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.shoppingList1.Location = new System.Drawing.Point(6, 6);
+            this.shoppingList1.Name = "shoppingList1";
+            this.shoppingList1.Size = new System.Drawing.Size(608, 389);
+            this.shoppingList1.TabIndex = 0;
             // 
             // MainForm
             // 
@@ -117,6 +130,7 @@ namespace GUI
             this.tabControl.ResumeLayout(false);
             this.pageRecipes.ResumeLayout(false);
             this.pageSelected.ResumeLayout(false);
+            this.pageShoppingList.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -129,6 +143,7 @@ namespace GUI
         private System.Windows.Forms.TabPage pageShoppingList;
         private RecipesList recipesList1;
         private RecipesMenu recipesMenu1;
+        private ShoppingList shoppingList1;
     }
 }
 
