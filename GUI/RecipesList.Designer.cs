@@ -49,6 +49,7 @@ namespace GUI
             // 
             // btnAddRecipe
             // 
+            this.btnAddRecipe.Enabled = false;
             this.btnAddRecipe.Location = new System.Drawing.Point(4, 4);
             this.btnAddRecipe.Name = "btnAddRecipe";
             this.btnAddRecipe.Size = new System.Drawing.Size(120, 23);
@@ -64,9 +65,11 @@ namespace GUI
             this.btnChooseRecipe.TabIndex = 2;
             this.btnChooseRecipe.Text = "Выбрать рецепт";
             this.btnChooseRecipe.UseVisualStyleBackColor = true;
+            this.btnChooseRecipe.Click += new System.EventHandler(this.btnChooseRecipe_Click);
             // 
             // btnRemoveRecipe
             // 
+            this.btnRemoveRecipe.Enabled = false;
             this.btnRemoveRecipe.Location = new System.Drawing.Point(256, 4);
             this.btnRemoveRecipe.Name = "btnRemoveRecipe";
             this.btnRemoveRecipe.Size = new System.Drawing.Size(120, 23);

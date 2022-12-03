@@ -1,4 +1,5 @@
-﻿using Model.Recipe;
+﻿using Model.Menu;
+using Model.Recipe;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,11 +14,13 @@ namespace Data
     public class FakeData : IDataSource
     {
         private List<BaseRecipe> recipes;
-        BaseUnit gr, ml, pcs;
+        private Menu menu;
+        private BaseUnit gr, ml, pcs;
 
         public FakeData()
         { 
             recipes = new List<BaseRecipe>();
+            menu = new Menu();  
 
             gr = new Gramm();
             ml = new Milliliter();
@@ -63,6 +66,10 @@ namespace Data
         public IReadOnlyList<BaseRecipe> GetRecipes()
         {
             return recipes;
+        }
+        public Menu GetMenu()
+        {
+            return menu;
         }
     }
 }
