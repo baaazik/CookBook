@@ -42,9 +42,10 @@ namespace GUI
             | System.Windows.Forms.AnchorStyles.Right)));
             this.listBoxRecipes.FormattingEnabled = true;
             this.listBoxRecipes.ItemHeight = 15;
-            this.listBoxRecipes.Location = new System.Drawing.Point(3, 38);
+            this.listBoxRecipes.Location = new System.Drawing.Point(4, 33);
             this.listBoxRecipes.Name = "listBoxRecipes";
-            this.listBoxRecipes.Size = new System.Drawing.Size(373, 214);
+            this.listBoxRecipes.Size = new System.Drawing.Size(372, 214);
+            this.listBoxRecipes.Sorted = true;
             this.listBoxRecipes.TabIndex = 0;
             // 
             // btnAddRecipe
@@ -86,7 +87,7 @@ namespace GUI
             this.Controls.Add(this.btnAddRecipe);
             this.Controls.Add(this.listBoxRecipes);
             this.Name = "RecipesList";
-            this.Size = new System.Drawing.Size(380, 259);
+            this.Size = new System.Drawing.Size(380, 260);
             this.ResumeLayout(false);
 
         }

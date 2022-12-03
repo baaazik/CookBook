@@ -1,5 +1,4 @@
 ﻿using Data;
-using Model.Menu;
 using Model.Recipe;
 using System;
 using System.Collections.Generic;
@@ -18,14 +17,14 @@ namespace GUI
     {
         IDataSource source;
         IReadOnlyList<BaseRecipe> recipes;
-        Menu menu;
+        IList<BaseRecipe> menu;
 
         public RecipesList()
         {
             InitializeComponent();
 
             // Получаем источник данных
-            source = new FakeData();
+            source = DataSourceProvider.GetInstance().GetSource();
             menu = source.GetMenu();
 
             UpdateRecipes();

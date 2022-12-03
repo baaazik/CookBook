@@ -34,8 +34,10 @@ namespace GUI
             this.recipesList1 = new GUI.RecipesList();
             this.pageSelected = new System.Windows.Forms.TabPage();
             this.pageShoppingList = new System.Windows.Forms.TabPage();
+            this.recipesMenu1 = new GUI.RecipesMenu();
             this.tabControl.SuspendLayout();
             this.pageRecipes.SuspendLayout();
+            this.pageSelected.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl
@@ -75,6 +77,7 @@ namespace GUI
             // 
             // pageSelected
             // 
+            this.pageSelected.Controls.Add(this.recipesMenu1);
             this.pageSelected.Location = new System.Drawing.Point(4, 24);
             this.pageSelected.Name = "pageSelected";
             this.pageSelected.Padding = new System.Windows.Forms.Padding(3);
@@ -93,6 +96,16 @@ namespace GUI
             this.pageShoppingList.Text = "Список покупок";
             this.pageShoppingList.UseVisualStyleBackColor = true;
             // 
+            // recipesMenu1
+            // 
+            this.recipesMenu1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.recipesMenu1.Location = new System.Drawing.Point(6, 6);
+            this.recipesMenu1.Name = "recipesMenu1";
+            this.recipesMenu1.Size = new System.Drawing.Size(605, 386);
+            this.recipesMenu1.TabIndex = 0;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -103,6 +116,7 @@ namespace GUI
             this.Text = "Книга рецептов";
             this.tabControl.ResumeLayout(false);
             this.pageRecipes.ResumeLayout(false);
+            this.pageSelected.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -114,6 +128,7 @@ namespace GUI
         private System.Windows.Forms.TabPage pageSelected;
         private System.Windows.Forms.TabPage pageShoppingList;
         private RecipesList recipesList1;
+        private RecipesMenu recipesMenu1;
     }
 }
 

@@ -1,5 +1,4 @@
-﻿using Model.Menu;
-using Model.Recipe;
+﻿using Model.Recipe;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +18,6 @@ namespace Data
         /// <returns>Список рецептов</returns>
         IReadOnlyList<BaseRecipe> GetRecipes();
 
-        Menu GetMenu();
+        IList<BaseRecipe> GetMenu();
     }
 }
