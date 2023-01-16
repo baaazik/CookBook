@@ -9,7 +9,7 @@ namespace Model.Recipe
     /// </summary>
     public class SimpleRecipe : BaseRecipe
     {
-        public SimpleRecipe(string name, string text, List<RecipeItem> ingredients, Amount amount) : base(name, text, ingredients, amount)
+        public SimpleRecipe(int id, string name, string text, List<RecipeItem> ingredients, Amount amount) : base(id, name, text, ingredients, amount)
         {
         }
 

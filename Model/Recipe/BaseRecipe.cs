@@ -9,14 +9,17 @@ namespace Model.Recipe
     /// </summary>
     public abstract class BaseRecipe
     {
-        public BaseRecipe(string name, string text, List<RecipeItem> ingredients, Amount amount)
+        public BaseRecipe(int id, string name, string text, List<RecipeItem> ingredients, Amount amount)
         {
+            Id = id;
             Name = name;
             RecipeText = text;
             Ingredients = ingredients;
             DefaultAmount = amount;
             ResetAmount();
         }
+
+        public int Id { get; }
 
         /// <summary>
         /// Название рецепта

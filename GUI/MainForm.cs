@@ -15,7 +15,24 @@ namespace GUI
         public MainForm()
         {
             InitializeComponent();
+            tabControl.Selected += TabControl_Selected;
         }
 
+        private void TabControl_Selected(object sender, TabControlEventArgs e)
+        {
+            switch(e.TabPageIndex)
+            {
+                case 0:
+                    recipesList1.Selected();
+                    break;
+                case 1:
+                    recipesMenu1.Selected();
+                    break;
+                case 2:
+                    shoppingList1.Selected(); 
+                    break;
+
+            }
+        }
     }
 }

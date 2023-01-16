@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.listBoxMenu = new System.Windows.Forms.ListBox();
-            this.btnRefresh = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // listBoxMenu
@@ -39,26 +38,15 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.listBoxMenu.FormattingEnabled = true;
             this.listBoxMenu.ItemHeight = 15;
-            this.listBoxMenu.Location = new System.Drawing.Point(4, 33);
+            this.listBoxMenu.Location = new System.Drawing.Point(4, 18);
             this.listBoxMenu.Name = "listBoxMenu";
-            this.listBoxMenu.Size = new System.Drawing.Size(372, 214);
+            this.listBoxMenu.Size = new System.Drawing.Size(372, 229);
             this.listBoxMenu.TabIndex = 0;
-            // 
-            // btnRefresh
-            // 
-            this.btnRefresh.Location = new System.Drawing.Point(4, 4);
-            this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Size = new System.Drawing.Size(120, 23);
-            this.btnRefresh.TabIndex = 2;
-            this.btnRefresh.Text = "Обновить";
-            this.btnRefresh.UseVisualStyleBackColor = true;
-            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
             // 
             // RecipesMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.btnRefresh);
             this.Controls.Add(this.listBoxMenu);
             this.Name = "RecipesMenu";
             this.Size = new System.Drawing.Size(380, 260);
@@ -69,6 +57,5 @@
         #endregion
 
         private System.Windows.Forms.ListBox listBoxMenu;
-        private System.Windows.Forms.Button btnRefresh;
     }
 }

@@ -13,7 +13,7 @@ namespace Tests
         public void TestConstructor()
         {
             var unit = new Milliliter();
-            var ingredient = new Ingredient("Молоко", unit);
+            var ingredient = new Ingredient(1, "Молоко", unit);
 
             Assert.AreEqual("Молоко", ingredient.Name);
             Assert.AreEqual(unit, ingredient.Unit);
@@ -30,8 +30,8 @@ namespace Tests
         public TestListIngredient()
         {
             ml = new Milliliter();
-            ing1 = new Ingredient("Соевое молоко", ml);
-            ing2 = new Ingredient("Кокосовое молоко", ml);
+            ing1 = new Ingredient(1, "Соевое молоко", ml);
+            ing2 = new Ingredient(2, "Кокосовое молоко", ml);
         }
 
 

@@ -18,10 +18,10 @@ namespace Tests
             //Создаем объекты ингредиентов, которые будут использоваться в рецепте
             gr = new Gramm();
             pcs = new Piece();
-            ing1 = new Ingredient("Картофель", gr);
-            ing2 = new Ingredient("Мука", gr);
-            ing3 = new Ingredient("Яйцо куриное", pcs);
-            ing4 = new Ingredient("Лук", pcs);
+            ing1 = new Ingredient(1, "Картофель", gr);
+            ing2 = new Ingredient(2, "Мука", gr);
+            ing3 = new Ingredient(3, "Яйцо куриное", pcs);
+            ing4 = new Ingredient(4, "Лук", pcs);
 
             ingredients = new List<RecipeItem>()
             {
@@ -40,7 +40,7 @@ namespace Tests
         {
             // Создаем рецепт
             var amount = new Amount(pcs, 6);
-            var recipe = new SimpleRecipe("Драники", "Какой-то текст", ingredients, amount);
+            var recipe = new SimpleRecipe(1, "Драники", "Какой-то текст", ingredients, amount);
             
             // Проверяем все свойства
             Assert.AreEqual("Драники", recipe.Name);
@@ -58,7 +58,7 @@ namespace Tests
         {
             // Создаем рецепт
             var amount = new Amount(pcs, 6);
-            var recipe = new SimpleRecipe("Драники", "Какой-то текст", ingredients, amount);
+            var recipe = new SimpleRecipe(1, "Драники", "Какой-то текст", ingredients, amount);
 
             // Изменим объем блюда
             recipe.SetAmount(10);
@@ -74,7 +74,7 @@ namespace Tests
         {
             // Создаем рецепт
             var amount = new Amount(pcs, 6);
-            var recipe = new SimpleRecipe("Драники", "Какой-то текст", ingredients, amount);
+            var recipe = new SimpleRecipe(1, "Драники", "Какой-то текст", ingredients, amount);
 
             // Изменим объем блюда
             recipe.SetAmount(10);
@@ -95,7 +95,7 @@ namespace Tests
         {
             // Создаем рецепт
             var amount = new Amount(pcs, 6);
-            var recipe = new SimpleRecipe("Драники", "Какой-то текст", ingredients, amount);
+            var recipe = new SimpleRecipe(1, "Драники", "Какой-то текст", ingredients, amount);
 
             CollectionAssert.AreEquivalent(ingredients, recipe.GetIngredients());
         }
@@ -107,7 +107,7 @@ namespace Tests
         {
             // Создаем рецепт
             var amount = new Amount(pcs, 6);
-            var recipe = new SimpleRecipe("Драники", "Какой-то текст", ingredients, amount);
+            var recipe = new SimpleRecipe(1, "Драники", "Какой-то текст", ingredients, amount);
 
             // Изменим объем блюда
             recipe.SetAmount(12);
@@ -131,7 +131,7 @@ namespace Tests
         {
             // Создаем рецепт
             var amount = new Amount(pcs, 6);
-            var recipe = new SimpleRecipe("Драники", "Какой-то текст", ingredients, amount);
+            var recipe = new SimpleRecipe(1, "Драники", "Какой-то текст", ingredients, amount);
 
             // Изменим объем блюда
             recipe.SetAmount(3);

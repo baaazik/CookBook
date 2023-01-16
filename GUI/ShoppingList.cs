@@ -30,11 +30,12 @@ namespace GUI
         private void UpdateMenu()
         {
             // Обновляем список покупок
-            _shoppingList = ShoppingListBuilder.GetShoppingList(_source.GetMenu());
+            var menu = _source.GetMenu();
+            _shoppingList = ShoppingListBuilder.GetShoppingList(menu);
             listBoxShopping.DataSource = _shoppingList;
         }
 
-        private void btnRefresh_Click(object sender, EventArgs e)
+        public void Selected()
         {
             UpdateMenu();
         }

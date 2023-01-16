@@ -25,17 +25,18 @@ namespace Data
             ml = new Milliliter();
             pcs = new Piece();
 
-            var water = new Ingredient("Вода", ml);
-            var milk = new Ingredient("Молоко", ml);
-            var flover = new Ingredient("Мука", gr);
-            var potato = new Ingredient("Картофель", gr);
-            var egg = new Ingredient("Яйцо куриное", pcs);
-            var onion = new Ingredient("Лук", pcs);
-            var chicken = new Ingredient("Филе куриное", gr);
-            var tomato = new Ingredient("Помидор", pcs);
-            var beans = new Ingredient("Фасоль", gr);
+            var water = new Ingredient(1, "Вода", ml);
+            var milk = new Ingredient(2, "Молоко", ml);
+            var flover = new Ingredient(3, "Мука", gr);
+            var potato = new Ingredient(4, "Картофель", gr);
+            var egg = new Ingredient(5, "Яйцо куриное", pcs);
+            var onion = new Ingredient(6, "Лук", pcs);
+            var chicken = new Ingredient(7, "Филе куриное", gr);
+            var tomato = new Ingredient(8, "Помидор", pcs);
+            var beans = new Ingredient(9, "Фасоль", gr);
 
             recipes.Add(new SimpleRecipe(
+                1,
                 "Драники",
                 "Рецепт",
                 new List<RecipeItem>
@@ -49,6 +50,7 @@ namespace Data
             ));
 
             recipes.Add(new SimpleRecipe(
+                2,
                 "Корм",
                 "Рецепт",
                 new List<RecipeItem>

@@ -50,5 +50,10 @@ namespace GUI
                 }
             }
         }
+
+        public void Selected()
+        {
+
+        }
     }
 }

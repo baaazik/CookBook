@@ -19,7 +19,7 @@ namespace GUI
 
         private DataSourceProvider()
         {
-            _source = new FakeData();
+            _source = new DataSource();
         }
 
         /// <summary>
