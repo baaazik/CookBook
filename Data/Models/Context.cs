@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -20,14 +22,14 @@ namespace Data.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Ingredient>()
-                .Property(e => e.UnitType)
-                .HasConversion(
-                    v => v.ToString(),
-                    v => (UnitType)Enum.Parse(typeof(UnitType), v));
+            SetupConversion<Ingredient>(modelBuilder, x => x.UnitType);
+            SetupConversion<Recipe>(modelBuilder, x => x.UnitType);           
+        }
 
-            modelBuilder.Entity<Recipe>()
-                .Property(e => e.UnitType)
+        private void SetupConversion<T>(ModelBuilder builder, Expression<Func<T, UnitType>> func) where T: class
+        {
+            builder.Entity<T>()
+                .Property(func)
                 .HasConversion(
                     v => v.ToString(),
                     v => (UnitType)Enum.Parse(typeof(UnitType), v));

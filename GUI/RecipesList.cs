@@ -13,7 +13,7 @@ namespace GUI
     /// <summary>
     /// Компонент, отображающий список рецептов
     /// </summary>
-    public partial class RecipesList : UserControl
+    public partial class RecipesList : UserControl, ITabElement
     {
         IDataSource source;
         IReadOnlyList<BaseRecipe> recipes;

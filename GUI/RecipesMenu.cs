@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace GUI
 {
-    public partial class RecipesMenu : UserControl
+    public partial class RecipesMenu : UserControl, ITabElement
     {
         IDataSource _source;
         IList<BaseRecipe> _menu;

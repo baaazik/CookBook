@@ -14,7 +14,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace GUI
 {
-    public partial class ShoppingList : UserControl
+    public partial class ShoppingList : UserControl, ITabElement
     {
         IDataSource _source;
         IList<RecipeItem> _shoppingList;
