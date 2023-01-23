@@ -17,15 +17,10 @@ namespace Data.Models
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
+        /// <summary>
+        /// Id ингредиента
+        /// </summary>
         public int IngredientId { get; set; }
-        [Required]
-        [ForeignKey(nameof(IngredientId))]
-        public virtual Ingredient Ingredient { get; set; }
-
-        public int SelectedRecipeId { get; set; }
-        [Required]
-        [ForeignKey(nameof(SelectedRecipeId))]
-        public virtual SelectedRecipe SelectedRecipe { get; set; }
 
         /// <summary>
         /// Ингредиент куплен
@@ -38,5 +33,26 @@ namespace Data.Models
         /// </summary>
         [Required]
         uint Amount { get; set; }
+
+        /// <summary>
+        /// Ингредиент
+        /// </summary>
+        [Required]
+        [ForeignKey(nameof(IngredientId))]
+        public virtual Ingredient Ingredient { get; set; }
+
+        /// <summary>
+        /// Id пользователя
+        /// </summary>
+        public string UserId { get; set; }
+
+        /// <summary>
+        /// Пользователь
+        /// </summary>
+        [Required]
+        [ForeignKey(nameof(UserId))]
+        public virtual User User { get; set; }
+
+
     }
 }

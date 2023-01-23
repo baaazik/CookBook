@@ -13,7 +13,18 @@ namespace Data.Models
     /// </summary>
     internal class User
     {
-        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        [Key]
+        [Required]
+        public string Id { get; set; }
+
+        /// <summary>
+        /// Список выбранных рецептов этого пользователя
+        /// </summary>
+        public virtual ICollection<SelectedRecipe> Recipes { get; set; } = new List<SelectedRecipe>();
+
+        /// <summary>
+        /// Список покупок пользователя
+        /// </summary>
+        public virtual ICollection<ShoppingItem> ShoppingItems { get; set; } = new HashSet<ShoppingItem>();
     }
 }
