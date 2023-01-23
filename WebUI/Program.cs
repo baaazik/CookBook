@@ -8,8 +8,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 var identityConnectionString = builder.Configuration.GetConnectionString("IdentityConnection");
 builder.Services.AddDbContext<IdentityContext>(options => options.UseSqlite(identityConnectionString));
-builder.Services.AddDefaultIdentity<IdentityUser>(o => {
-        o.SignIn.RequireConfirmedAccount = true;
+builder.Services.AddDefaultIdentity<WebUser>(o => {
+        o.SignIn.RequireConfirmedAccount = false;
         o.Password.RequireDigit = false;
         o.Password.RequireNonAlphanumeric = false;
         o.Password.RequireUppercase = false;
