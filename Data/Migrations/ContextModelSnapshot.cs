@@ -76,7 +76,7 @@ namespace Data.Migrations
 
                     b.HasIndex("IngredientId");
 
-                    b.ToTable("RecipeIngredient");
+                    b.ToTable("RecipeIngredients");
                 });
 
             modelBuilder.Entity("Data.Models.SelectedRecipe", b =>

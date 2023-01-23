@@ -11,14 +11,22 @@ namespace Data.Models
 {
     internal class Context : DbContext
     {
+        private string _sqlConnectionString = "Server=(localdb)\\mssqllocaldb;Database=sema_Data;Trusted_Connection=True;MultipleActiveResultSets=true";
+        private string _sqliteConnectionString = "Data Source=D:\\recipes_data.db";
+
         public DbSet<Recipe> Recipes { get; set; }
         public DbSet<Ingredient> Ingredients { get; set; }
         public DbSet<RecipeIngredient> RecipeIngredients { get; set; }
         public DbSet<SelectedRecipe> SelectedRecipes { get; set; }
 
+        public Context()
+        {
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Data Source=recipes.db");
+            // optionsBuilder.UseSqlServer(_sqlConnectionString);
+            optionsBuilder.UseSqlite(_sqliteConnectionString);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

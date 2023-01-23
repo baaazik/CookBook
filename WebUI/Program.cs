@@ -1,17 +1,18 @@
+using Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using WebUI.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionString));
-builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+var identityConnectionString = builder.Configuration.GetConnectionString("IdentityConnection");
+builder.Services.AddDbContext<IdentityContext>(options => options.UseSqlite(identityConnectionString));
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<IdentityContext>();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+// Data
+builder.Services.AddScoped<IDataSource, DataSource>();
+
+// Razor pages
 builder.Services.AddRazorPages();
 
 var app = builder.Build();

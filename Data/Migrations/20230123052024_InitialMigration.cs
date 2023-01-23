@@ -5,7 +5,7 @@
 namespace Data.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class InitialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -41,7 +41,7 @@ namespace Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "RecipeIngredient",
+                name: "RecipeIngredients",
                 columns: table => new
                 {
                     RecipeId = table.Column<int>(type: "INTEGER", nullable: false),
@@ -50,15 +50,15 @@ namespace Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RecipeIngredient", x => new { x.RecipeId, x.IngredientId });
+                    table.PrimaryKey("PK_RecipeIngredients", x => new { x.RecipeId, x.IngredientId });
                     table.ForeignKey(
-                        name: "FK_RecipeIngredient_Ingredients_IngredientId",
+                        name: "FK_RecipeIngredients_Ingredients_IngredientId",
                         column: x => x.IngredientId,
                         principalTable: "Ingredients",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_RecipeIngredient_Recipes_RecipeId",
+                        name: "FK_RecipeIngredients_Recipes_RecipeId",
                         column: x => x.RecipeId,
                         principalTable: "Recipes",
                         principalColumn: "Id",
@@ -86,8 +86,8 @@ namespace Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_RecipeIngredient_IngredientId",
-                table: "RecipeIngredient",
+                name: "IX_RecipeIngredients_IngredientId",
+                table: "RecipeIngredients",
                 column: "IngredientId");
 
             migrationBuilder.CreateIndex(
@@ -100,7 +100,7 @@ namespace Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "RecipeIngredient");
+                name: "RecipeIngredients");
 
             migrationBuilder.DropTable(
                 name: "SelectedRecipes");

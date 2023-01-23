@@ -1,12 +1,13 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using WebUI.Areas.Identity.Data;
 
 namespace WebUI.Data;
 
-public class WebUIContext : IdentityDbContext<IdentityUser>
+public class IdentityContext : IdentityDbContext<WebUser>
 {
-    public WebUIContext(DbContextOptions<WebUIContext> options)
+    public IdentityContext(DbContextOptions<IdentityContext> options)
         : base(options)
     {
     }

@@ -1,20 +1,23 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Data;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Model.Recipe;
 
 namespace WebUI.Pages
 {
     public class IndexModel : PageModel
     {
-        private readonly ILogger<IndexModel> _logger;
+        private readonly IDataSource _data;
+        public IReadOnlyList<Recipe> Recipes { get; set; }
 
-        public IndexModel(ILogger<IndexModel> logger)
+        public IndexModel(IDataSource data)
         {
-            _logger = logger;
+            _data = data;
         }
 
         public void OnGet()
         {
-
+            Recipes = _data.GetRecipes();
         }
     }
 }
