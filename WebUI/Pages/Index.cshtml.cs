@@ -15,9 +15,12 @@ namespace WebUI.Pages
             _data = data;
         }
 
-        public void OnGet()
+        public void OnGet(int? categoryId = null)
         {
-            Recipes = _data.GetRecipes();
+            if (categoryId == null)
+                Recipes = _data.GetRecipes();
+            else
+                Recipes = _data.GetRecipes((int)categoryId);
         }
     }
 }

@@ -1,0 +1,25 @@
+﻿@page
+@model WebUI.Pages.CategoriesModel
+@{
+}
+<div class="text-center">
+    <h1 class="display-4">Категории</h1>
+</div>
+
+
+@foreach (var category in Model.Categories)
+{
+        <div class="card mb-3 text-left">
+            <div class="row g-0">
+                <div class="col-md-2">
+                    <img src="images/no-image.jpg" class="img-fluid rounded-start"/>
+                </div>
+                <div class="col-md-10">
+                    <div class="card-body">
+                        <h5 class="card-title">@category.Name</h5>
+                        <a href="/?categoryId=@category.Id" class="btn btn-primary">Читать</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+}

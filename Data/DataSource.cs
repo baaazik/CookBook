@@ -60,13 +60,34 @@ namespace Data
             return ingredients;
         }
 
-		public Model.Recipe.Recipe GetRecipe(int id)
+        public IReadOnlyList<Model.Recipe.Recipe> GetRecipes(int categoryId)
+        {
+            var query = ctx.Recipes
+                .Include(r => r.Ingredients)
+                .ThenInclude(i => i.Ingredient)
+                .Where(r => r.Categories.Any(c => c.Id == categoryId));
+            var recipes = SelectRecie(query).ToList();
+            return recipes;
+        }
+
+        public Model.Recipe.Recipe GetRecipe(int id)
 		{
             var query = ctx.Recipes
                 .Include(r => r.Ingredients)
                 .ThenInclude(i => i.Ingredient);
             return SelectRecie(query).FirstOrDefault(x => x.Id == id);
 		}
+
+        public IReadOnlyList<Model.Recipe.Category> GetCategories()
+        {
+            return ctx.Categories
+                .Select(c => new Model.Recipe.Category()
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                })
+                .ToList();
+        }
 
         private IQueryable<Model.Recipe.Recipe> SelectRecie(IQueryable<Models.Recipe> query)
         {
@@ -91,5 +112,5 @@ namespace Data
                 });
 
 		}
-	}
+    }
 }

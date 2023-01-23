@@ -18,6 +18,9 @@ namespace Data.Models
         public DbSet<Ingredient> Ingredients { get; set; }
         public DbSet<RecipeIngredient> RecipeIngredients { get; set; }
         public DbSet<SelectedRecipe> SelectedRecipes { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<ShoppingItem> ShoppingItems { get; set; }
 
         public Context()
         {

@@ -41,6 +41,7 @@ namespace Data.Models
         /// Список ингредиентов
         /// </summary>
         public virtual ICollection<RecipeIngredient> Ingredients { get; set;} = new List<RecipeIngredient>();
+        public virtual ICollection<Category> Categories { get; set; } = new List<Category>();
 
     }
 }
