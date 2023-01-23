@@ -55,7 +55,7 @@ namespace Model.Recipe
             foreach (var ingredient in Recipe.Ingredients)
             {
                 var scaledValue = ingredient.Ingredient.Unit.ChangeAmount(ingredient.Amount, gain);
-                var scaledIngredient = new RecipeItem(ingredient.Ingredient, scaledValue);
+                var scaledIngredient = new RecipeItem() { Ingredient = ingredient.Ingredient, Amount = scaledValue };
                 ingredients.Add(scaledIngredient);
             }
 

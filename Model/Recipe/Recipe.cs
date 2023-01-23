@@ -45,12 +45,6 @@ namespace Model.Recipe
     /// </summary>
     public struct RecipeItem
     {
-        public RecipeItem(Ingredient ingredient, uint amount)
-        {
-            Ingredient = ingredient;
-            Amount = amount;
-        }
-
         public Ingredient Ingredient { get; set; }
         public uint Amount { get; set; }
 

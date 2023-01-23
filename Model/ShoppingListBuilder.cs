@@ -42,7 +42,7 @@ namespace Model
 
             foreach(var (key, value) in ingredients)
             {
-                list.Add(new RecipeItem(key, value));
+                list.Add(new RecipeItem() { Ingredient = key, Amount = value });
             }
 
             return list;

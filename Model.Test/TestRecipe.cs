@@ -17,17 +17,17 @@ namespace Tests
             //Создаем объекты ингредиентов, которые будут использоваться в рецепте
             gr = new Gramm();
             pcs = new Piece();
-            ing1 = new Ingredient(1, "Картофель", gr);
-            ing2 = new Ingredient(2, "Мука", gr);
-            ing3 = new Ingredient(3, "Яйцо куриное", pcs);
-            ing4 = new Ingredient(4, "Лук", pcs);
+            ing1 = new Ingredient() { Id = 1, Name = "Картофель", Unit = gr };
+            ing2 = new Ingredient() { Id = 2, Name = "Мука", Unit = gr };
+            ing3 = new Ingredient() { Id = 3, Name = "Яйцо куриное", Unit = pcs };
+            ing4 = new Ingredient() { Id = 4, Name = "Лук", Unit = pcs };
 
             ingredients = new List<RecipeItem>()
             {
-                new RecipeItem(ing1, 800),
-                new RecipeItem(ing2, 50),
-                new RecipeItem(ing3, 1),
-                new RecipeItem(ing4, 1)
+                new RecipeItem(){ Ingredient = ing1, Amount = 800 },
+                new RecipeItem() { Ingredient = ing2, Amount = 50 },
+                new RecipeItem() { Ingredient = ing3, Amount = 1 },
+                new RecipeItem() { Ingredient = ing4, Amount = 1 }
             };
         }
     }
@@ -86,10 +86,10 @@ namespace Tests
             // Ожидаемый новый объем всех ингредиентов
             var newIngredients = new List<RecipeItem>()
             {
-                new RecipeItem(ing1, 1600),
-                new RecipeItem(ing2, 100),
-                new RecipeItem(ing3, 2),
-                new RecipeItem(ing4, 2)
+                new RecipeItem() { Ingredient = ing1, Amount = 1600 },
+                new RecipeItem() { Ingredient = ing2, Amount = 100 },
+                new RecipeItem() { Ingredient = ing3, Amount = 2 },
+                new RecipeItem() { Ingredient = ing4, Amount = 2 }
             };
 
             CollectionAssert.AreEquivalent(newIngredients, selectedRecipe.GetIngredients());
@@ -111,10 +111,10 @@ namespace Tests
             // Ожидаемый новый объем всех ингредиентов
             var newIngredients = new List<RecipeItem>()
             {
-                new RecipeItem(ing1, 400),
-                new RecipeItem(ing2, 25),
-                new RecipeItem(ing3, 1),
-                new RecipeItem(ing4, 1)
+                new RecipeItem() { Ingredient = ing1, Amount = 400 },
+                new RecipeItem() { Ingredient = ing2, Amount = 25 },
+                new RecipeItem() { Ingredient = ing3, Amount = 1 },
+                new RecipeItem() { Ingredient = ing4, Amount = 1 } 
             };
 
             CollectionAssert.AreEquivalent(newIngredients, selectedRecipe.GetIngredients());
