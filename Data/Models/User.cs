@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace Data.Models
 {
+    /// <summary>
+    /// Пользователь
+    /// </summary>
     internal class User
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]

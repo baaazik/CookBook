@@ -33,12 +33,39 @@ namespace Data
         /// <returns>Список рецептов</returns>
         public IReadOnlyList<Model.Recipe.Recipe> GetRecipes()
         {
-            var query = ctx.Recipes
-                .Include(r => r.Ingredients)
-                .ThenInclude(i => i.Ingredient);
-            var recipes = SelectRecie(query).ToList();
+            var recipes = ctx.Recipes
+                .Select(r => new Model.Recipe.Recipe()
+                {
+                    Id = r.Id,
+                    Name= r.Name,
+                })
+                .ToList();
 
             return recipes;
+        }
+
+        public IReadOnlyList<Model.Recipe.Recipe> GetRecipes(int categoryId)
+        {
+            var recipes = ctx.Recipes
+                .Where(r => r.Categories.Any(c => c.Id == categoryId))
+                .Select(r => new Model.Recipe.Recipe()
+                {
+                    Id = r.Id,
+                    Name = r.Name,
+                })
+                .ToList();
+            return recipes;
+        }
+
+        public IReadOnlyList<Model.Recipe.Category> GetCategories()
+        {
+            return ctx.Categories
+                .Select(c => new Model.Recipe.Category()
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                })
+                .ToList();
         }
 
         /// <summary>
@@ -60,38 +87,11 @@ namespace Data
             return ingredients;
         }
 
-        public IReadOnlyList<Model.Recipe.Recipe> GetRecipes(int categoryId)
-        {
-            var query = ctx.Recipes
-                .Include(r => r.Ingredients)
-                .ThenInclude(i => i.Ingredient)
-                .Where(r => r.Categories.Any(c => c.Id == categoryId));
-            var recipes = SelectRecie(query).ToList();
-            return recipes;
-        }
-
         public Model.Recipe.Recipe GetRecipe(int id)
 		{
-            var query = ctx.Recipes
+            var recipe = ctx.Recipes
                 .Include(r => r.Ingredients)
-                .ThenInclude(i => i.Ingredient);
-            return SelectRecie(query).FirstOrDefault(x => x.Id == id);
-		}
-
-        public IReadOnlyList<Model.Recipe.Category> GetCategories()
-        {
-            return ctx.Categories
-                .Select(c => new Model.Recipe.Category()
-                {
-                    Id = c.Id,
-                    Name = c.Name,
-                })
-                .ToList();
-        }
-
-        private IQueryable<Model.Recipe.Recipe> SelectRecie(IQueryable<Models.Recipe> query)
-        {
-            return query
+                .ThenInclude(i => i.Ingredient)
                 .Select(r => new Model.Recipe.Recipe()
                 {
                     Id = r.Id,
@@ -109,8 +109,9 @@ namespace Data
                         Amount = i.Amount
                     })
                     .ToList()
-                });
-
+                })
+                .FirstOrDefault(x => x.Id == id);
+            return recipe;
 		}
     }
 }

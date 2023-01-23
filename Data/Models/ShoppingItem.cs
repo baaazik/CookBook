@@ -9,6 +9,9 @@ using Model.Recipe;
 
 namespace Data.Models
 {
+    /// <summary>
+    /// Эоемент списка покупок
+    /// </summary>
     internal class ShoppingItem
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -24,9 +27,15 @@ namespace Data.Models
         [ForeignKey(nameof(SelectedRecipeId))]
         public virtual SelectedRecipe SelectedRecipe { get; set; }
 
+        /// <summary>
+        /// Ингредиент куплен
+        /// </summary>
         [Required]
         bool IsBought { get; set; }
 
+        /// <summary>
+        /// Количество ингредиента
+        /// </summary>
         [Required]
         uint Amount { get; set; }
     }

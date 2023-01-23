@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace Data.Models
 {
+    /// <summary>
+    /// Связь рецептов и ингредиентов
+    /// </summary>
     [PrimaryKey(nameof(RecipeId), nameof(IngredientId))]
     internal class RecipeIngredient
     {

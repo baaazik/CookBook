@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace Data.Models
 {
+    /// <summary>
+    /// Категория рецептов
+    /// </summary>
     internal class Category
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
