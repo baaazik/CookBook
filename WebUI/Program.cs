@@ -1,13 +1,21 @@
 using Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using WebUI.Areas.Identity.Data;
 using WebUI.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
 var identityConnectionString = builder.Configuration.GetConnectionString("IdentityConnection");
 builder.Services.AddDbContext<IdentityContext>(options => options.UseSqlite(identityConnectionString));
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<IdentityContext>();
+builder.Services.AddDefaultIdentity<IdentityUser>(o => {
+        o.SignIn.RequireConfirmedAccount = true;
+        o.Password.RequireDigit = false;
+        o.Password.RequireNonAlphanumeric = false;
+        o.Password.RequireUppercase = false;
+        o.Password.RequireLowercase = false;
+    })
+    .AddEntityFrameworkStores<IdentityContext>();
 
 // Data
 builder.Services.AddScoped<IDataSource, DataSource>();
