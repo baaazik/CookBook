@@ -1,0 +1,41 @@
+﻿@page
+@model WebUI.Pages.RecipeModel
+@{
+    ViewData["Title"] = Model.Recipe.Name;
+}
+
+<div class="text-center">
+    <h1 class="display-4">@Model.Recipe.Name</h1>
+</div>
+<div class="card mb-3 p-3">
+    <form>
+        <div class="mb-3">
+            Добавить рецепт
+        </div>
+        <div class="form-group row">
+            <label class="col-2">Количество</label>
+            <div class="col-8">
+                <input type="number" class="form-control" name="amount" value="@Model.Recipe.Amount.Value">
+            </div>
+            <label class="col-2">
+                @Model.Recipe.Amount.Unit.ToString()
+            </label>
+        </div>
+        <button type="submit" class="btn btn-primary">Добавить</button>
+    </form>
+</div>
+
+<h2>Ингредиенты</h2>
+@foreach(var ingr in Model.Recipe.Ingredients)
+{
+    <row class="row pd-3">
+        <div class="col-6">
+            @ingr.Ingredient.Name
+        </div>
+        <div class="col-2">
+            @ingr.Amount @ingr.Ingredient.Unit
+        </div>
+    </row>
+}
+<h3>Приготовление</h3>
+@Html.Raw(Model.Recipe.RecipeText)

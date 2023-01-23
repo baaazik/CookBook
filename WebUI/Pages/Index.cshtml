@@ -1,10 +1,27 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Список рецептов";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Список рецептов</h1>
 </div>
+
+@foreach(var recipe in Model.Recipes)
+{
+    <div class="card mb-3 text-left">
+        <div class="row g-0">
+            <div class="col-md-2">
+                <img src="images/no-image.jpg" class="img-fluid rounded-start"/>
+            </div>
+            <div class="col-md-10">
+                <div class="card-body">
+                    <h5 class="card-title">@recipe.Name</h5>
+                    <p class="card-text">Краткое описание рецепта....</p>
+                    <a href="/Recipe?id=@recipe.Id" class="btn btn-primary">Читать</a>
+                </div>
+            </div>
+        </div>
+    </div>
+}

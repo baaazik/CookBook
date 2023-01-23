@@ -19,6 +19,13 @@ namespace Data
         IReadOnlyList<Recipe> GetRecipes();
 
         /// <summary>
+        /// Получить рецепт по ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Recipe GetRecipe(int id);
+
+        /// <summary>
         /// Получить список ингредиентов
         /// </summary>
         /// <returns></returns>

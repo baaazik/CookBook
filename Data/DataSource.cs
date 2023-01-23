@@ -33,28 +33,10 @@ namespace Data
         /// <returns>Список рецептов</returns>
         public IReadOnlyList<Model.Recipe.Recipe> GetRecipes()
         {
-            var recipes = ctx.Recipes
+            var query = ctx.Recipes
                 .Include(r => r.Ingredients)
-                .ThenInclude(i => i.Ingredient)
-                .Select(r => new Model.Recipe.Recipe()
-                {
-                    Id = r.Id,
-                    Name = r.Name,
-                    RecipeText = r.RecipeText,
-                    Amount = new Amount() { Unit = UnitConverter.TypeToUnit(r.UnitType), Value = r.Amount},
-                    Ingredients = r.Ingredients.Select(i => new Model.Recipe.RecipeItem()
-                    {
-                        Ingredient = new Model.Recipe.Ingredient()
-                        {
-                            Id = i.Ingredient.Id,
-                            Name = i.Ingredient.Name,
-                            Unit = UnitConverter.TypeToUnit(i.Ingredient.UnitType)
-                        },
-                        Amount = i.Amount
-                    })
-                    .ToList()
-                })
-                .ToList();
+                .ThenInclude(i => i.Ingredient);
+            var recipes = SelectRecie(query).ToList();
 
             return recipes;
         }
@@ -77,5 +59,37 @@ namespace Data
 
             return ingredients;
         }
-    }
+
+		public Model.Recipe.Recipe GetRecipe(int id)
+		{
+            var query = ctx.Recipes
+                .Include(r => r.Ingredients)
+                .ThenInclude(i => i.Ingredient);
+            return SelectRecie(query).FirstOrDefault(x => x.Id == id);
+		}
+
+        private IQueryable<Model.Recipe.Recipe> SelectRecie(IQueryable<Models.Recipe> query)
+        {
+            return query
+                .Select(r => new Model.Recipe.Recipe()
+                {
+                    Id = r.Id,
+                    Name = r.Name,
+                    RecipeText = r.RecipeText,
+                    Amount = new Amount() { Unit = UnitConverter.TypeToUnit(r.UnitType), Value = r.Amount },
+                    Ingredients = r.Ingredients.Select(i => new Model.Recipe.RecipeItem()
+                    {
+                        Ingredient = new Model.Recipe.Ingredient()
+                        {
+                            Id = i.Ingredient.Id,
+                            Name = i.Ingredient.Name,
+                            Unit = UnitConverter.TypeToUnit(i.Ingredient.UnitType)
+                        },
+                        Amount = i.Amount
+                    })
+                    .ToList()
+                });
+
+		}
+	}
 }
