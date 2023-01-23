@@ -48,6 +48,21 @@ namespace Data
         /// Получить список выбранных рецептов
         /// </summary>
         /// <returns></returns>
-        IList<SelectedRecipe> GetMenu();
+        IList<SelectedRecipe> GetMenu(string userId);
+
+        /// <summary>
+        /// Добавляет рецепт в список выбранного для пользовтеля
+        /// </summary>
+        /// <param name="userId">Id пользователя</param>
+        /// <param name="recipeId">Id рецепта</param>
+        /// <param name="amount">Объем блюда</param>
+        void SelectRecipe(string userId, int recipeId, uint amount);
+
+        /// <summary>
+        /// Удаляет выбранный рецепт из меню пользователя
+        /// </summary>
+        /// <param name="userId">Id пользователя</param>
+        /// <param name="recipeId">Id рецепта</param>
+        void DeleteRecipe(string userId, int recipeId);
     }
 }

@@ -1,0 +1,46 @@
+﻿@page
+@model WebUI.Pages.SelectedRecipesModel
+@{
+    ViewData["Title"] = "Выбранные рецепты";
+}
+
+
+<div class="text-center">
+    <h1 class="display-4">Список выбранных рецептов</h1>
+</div>
+
+@if (Model.Recipes.Count == 0)
+{
+    <div>
+        Здесь еще ничего нет...
+        <br/>
+        Вы можете изучить и выбрать рецепты <a href="/">здесь</a>
+    </div>
+    
+}
+
+@foreach (var recipe in Model.Recipes)
+{
+        <div class="card mb-3 text-left">
+            <div class="row g-0">
+                <div class="col-md-2">
+                    <img src="images/no-image.jpg" class="img-fluid rounded-start"/>
+                </div>
+                <div class="col-md-10">
+                    <div class="card-body">
+                        <h5 class="card-title">@recipe.Recipe.Name</h5>
+                        <p class="card-text">Краткое описание рецепта....</p>
+                        <div class="row">
+                            <div class="col-auto">
+                                <a href="/Recipe?id=@recipe.Recipe.Id" class="btn btn-primary">Читать</a>
+                            </div>
+                            <form method="post" class="col-auto">
+                                <input type="hidden" name="recipeId" value="@recipe.Recipe.Id"/>
+                                <button type="submit" class="btn btn-danger">Удалить</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+}

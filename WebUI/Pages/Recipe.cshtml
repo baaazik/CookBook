@@ -8,7 +8,7 @@
     <h1 class="display-4">@Model.Recipe.Name</h1>
 </div>
 <div class="card mb-3 p-3">
-    <form>
+    <form method="post">
         <div class="mb-3">
             Добавить рецепт
         </div>
@@ -21,6 +21,7 @@
                 @Model.Recipe.Amount.Unit.ToString()
             </label>
         </div>
+        <input type="hidden" name="recipeId" value="@Model.Recipe.Id"/>
         <button type="submit" class="btn btn-primary">Добавить</button>
     </form>
 </div>

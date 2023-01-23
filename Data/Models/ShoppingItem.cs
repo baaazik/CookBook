@@ -52,7 +52,5 @@ namespace Data.Models
         [Required]
         [ForeignKey(nameof(UserId))]
         public virtual User User { get; set; }
-
-
     }
 }

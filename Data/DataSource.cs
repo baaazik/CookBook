@@ -1,6 +1,5 @@
 ﻿using Data.Models;
 using Microsoft.EntityFrameworkCore;
-using Model.Recipe;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,15 +15,6 @@ namespace Data
         public DataSource()
         {
             ctx = new Context();
-        }
-
-        /// <summary>
-        /// Возращает меню - список выбранных рецептов
-        /// </summary>
-        /// <returns>Список выбранных рецептов</returns>
-        public IList<Model.Recipe.SelectedRecipe> GetMenu()
-        {
-            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -52,6 +42,7 @@ namespace Data
                 {
                     Id = r.Id,
                     Name = r.Name,
+                    Amount = new Model.Recipe.Amount() { Unit = UnitConverter.TypeToUnit(r.UnitType), Value = r.Amount },
                 })
                 .ToList();
             return recipes;
@@ -97,7 +88,7 @@ namespace Data
                     Id = r.Id,
                     Name = r.Name,
                     RecipeText = r.RecipeText,
-                    Amount = new Amount() { Unit = UnitConverter.TypeToUnit(r.UnitType), Value = r.Amount },
+                    Amount = new Model.Recipe.Amount() { Unit = UnitConverter.TypeToUnit(r.UnitType), Value = r.Amount },
                     Ingredients = r.Ingredients.Select(i => new Model.Recipe.RecipeItem()
                     {
                         Ingredient = new Model.Recipe.Ingredient()
@@ -113,5 +104,51 @@ namespace Data
                 .FirstOrDefault(x => x.Id == id);
             return recipe;
 		}
+
+        /// <summary>
+        /// Возращает меню - список выбранных рецептов
+        /// </summary>
+        /// <returns>Список выбранных рецептов</returns>
+        public IList<Model.Recipe.SelectedRecipe> GetMenu(string userId)
+        {
+            var recipes = ctx.SelectedRecipes
+                .Where(r => r.UserId == userId)
+                .Select(r => new Model.Recipe.SelectedRecipe()
+                {
+                    Id = r.Id,
+                    Recipe = new Model.Recipe.Recipe()
+                    {
+                        Id = r.Recipe.Id,
+                        Name = r.Recipe.Name,
+                        Amount = new Model.Recipe.Amount() { Unit = UnitConverter.TypeToUnit(r.Recipe.UnitType), Value = r.Recipe.Amount },
+                    },
+                    Amount = new Model.Recipe.Amount() { Unit = UnitConverter.TypeToUnit(r.Recipe.UnitType), Value = r.Amount },
+                })
+                .ToList();
+            return recipes;
+        }
+
+        public void SelectRecipe(string userId, int recipeId, uint amount)
+        {
+            var newSelectedRecipe = new SelectedRecipe()
+            {
+                UserId = userId,
+                RecipeId = recipeId,
+                Amount = amount
+            };
+
+            ctx.SelectedRecipes.Add(newSelectedRecipe);
+            ctx.SaveChanges();
+        }
+
+        public void DeleteRecipe(string userId, int recipeId)
+        {
+            var selectedRecipe = ctx.SelectedRecipes
+                .First(r => r.UserId == userId && r.RecipeId == recipeId);
+
+            ctx.SelectedRecipes.Attach(selectedRecipe);
+            ctx.SelectedRecipes.Remove(selectedRecipe);
+            ctx.SaveChanges();
+        }
     }
 }

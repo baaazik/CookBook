@@ -9,6 +9,8 @@ namespace Model.Recipe
     /// </summary>
     public class SelectedRecipe
     {
+        public SelectedRecipe() { }
+
         public SelectedRecipe(int id, Recipe recipe)
         {
             Id = id;
@@ -41,6 +43,7 @@ namespace Model.Recipe
         public Amount Amount
         {
             get => new Amount(Recipe.Amount.Unit, _amount);
+            set => _amount = value.Value;
         }
         private uint _amount;
 
