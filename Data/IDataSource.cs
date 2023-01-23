@@ -19,6 +19,12 @@ namespace Data
         IReadOnlyList<Recipe> GetRecipes();
 
         /// <summary>
+        /// Получить список ингредиентов
+        /// </summary>
+        /// <returns></returns>
+        IReadOnlyList<Ingredient> GetIngredients();
+
+        /// <summary>
         /// Получить список выбранных рецептов
         /// </summary>
         /// <returns></returns>

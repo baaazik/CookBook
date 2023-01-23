@@ -12,14 +12,10 @@ namespace Data
     public class DataSource : IDataSource
     {
         private Context ctx;
-        List<Model.Recipe.Recipe> recipes;
-        List<Model.Recipe.Ingredient> ingredients;
-        List<Model.Recipe.SelectedRecipe> menu;
 
         public DataSource()
         {
             ctx = new Context();
-            menu = new List<Model.Recipe.SelectedRecipe>();
         }
 
         /// <summary>
@@ -28,7 +24,7 @@ namespace Data
         /// <returns>Список выбранных рецептов</returns>
         public IList<Model.Recipe.SelectedRecipe> GetMenu()
         {
-            return menu;
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -37,45 +33,30 @@ namespace Data
         /// <returns>Список рецептов</returns>
         public IReadOnlyList<Model.Recipe.Recipe> GetRecipes()
         {
-            if (this.recipes != null)
-                return this.recipes;
+            var recipes = ctx.Recipes
+                .Include(r => r.Ingredients)
+                .ThenInclude(i => i.Ingredient)
+                .Select(r => new Model.Recipe.Recipe()
+                {
+                    Id = r.Id,
+                    Name = r.Name,
+                    RecipeText = r.RecipeText,
+                    Amount = new Amount() { Unit = UnitConverter.TypeToUnit(r.UnitType), Value = r.Amount},
+                    Ingredients = r.Ingredients.Select(i => new Model.Recipe.RecipeItem()
+                    {
+                        Ingredient = new Model.Recipe.Ingredient()
+                        {
+                            Id = i.Ingredient.Id,
+                            Name = i.Ingredient.Name,
+                            Unit = UnitConverter.TypeToUnit(i.Ingredient.UnitType)
+                        },
+                        Amount = i.Amount
+                    })
+                    .ToList()
+                })
+                .ToList();
 
-            var dtoRecipes = ctx.Recipes.Include(x => x.Ingredients).ToList();
-            var recipes = new List<Model.Recipe.Recipe>();
-
-            foreach(var dtoRecipe in dtoRecipes)
-            {
-                var recipe = CreateRecipe(dtoRecipe);
-                recipes.Add(recipe);
-            }
-
-            this.recipes = recipes;
             return recipes;
-        }
-
-        // Создает рецепт
-        private Model.Recipe.Recipe CreateRecipe(Data.Models.Recipe dtoRecipe)
-        {
-            var unit = CreateUnit(dtoRecipe.UnitType);
-            var amount = new Amount() { Unit = unit, Value = dtoRecipe.Amount };
-
-            var ingredients = new List<Model.Recipe.RecipeItem>();
-            foreach (var dtoIngredient in dtoRecipe.Ingredients)
-            {
-                var ingredient = GetIngredient(dtoIngredient.IngredientId);
-                var item = new Model.Recipe.RecipeItem() { Amount = dtoIngredient.Amount, Ingredient = ingredient };
-                ingredients.Add(item);
-            }
-
-            var recipe = new Model.Recipe.Recipe() {
-                Id = dtoRecipe.Id, 
-                Name = dtoRecipe.Name,
-                RecipeText = dtoRecipe.RecipeText,
-                Ingredients = ingredients,
-                Amount = amount 
-            };
-
-            return recipe;
         }
 
         /// <summary>
@@ -84,54 +65,17 @@ namespace Data
         /// <returns>Список ингредиентов</returns>
         public IReadOnlyList<Model.Recipe.Ingredient> GetIngredients()
         {
-            if (this.ingredients != null)
-                return this.ingredients;
 
-            var dtoIngredients = ctx.Ingredients.ToList();
-            var ingredients = new List<Model.Recipe.Ingredient>();
+            var ingredients = ctx.Ingredients
+                .Select(i => new Model.Recipe.Ingredient()
+                {
+                    Id = i.Id,
+                    Name = i.Name,
+                    Unit = UnitConverter.TypeToUnit(i.UnitType)
+                })
+                .ToList();
 
-            foreach(var dtoIngredient in dtoIngredients)
-            {
-                var ingredient = CreateIngredient(dtoIngredient);
-                ingredients.Add(ingredient);
-            }
-
-            this.ingredients = ingredients;
             return ingredients;
-        }
-
-        // Создает ингредиент
-        private static Model.Recipe.Ingredient CreateIngredient(Models.Ingredient dtoIngredient)
-        {
-            var unit = CreateUnit(dtoIngredient.UnitType);
-            var ingredient = new Model.Recipe.Ingredient(dtoIngredient.Id, dtoIngredient.Name, unit);
-            return ingredient;
-        }
-
-        // Создает класс единицы измерения из типа
-        private static BaseUnit CreateUnit(UnitType type)
-        {
-            switch (type)
-            {
-                case UnitType.PIECE:
-                    return new Piece();
-                case UnitType.MILLILITER:
-                    return new Milliliter();
-                case UnitType.GRAMM:
-                    return new Gramm();
-                default: throw new NotImplementedException();
-            }
-        }
-
-        /// <summary>
-        /// Поиск ингредиента по ID
-        /// </summary>
-        /// <param name="id">ID ингредиента</param>
-        /// <returns>Ингредиент или null</returns>
-        public Model.Recipe.Ingredient GetIngredient(int id)
-        {
-            var ingredients = GetIngredients();
-            return ingredients.FirstOrDefault(x => x.Id == id);
         }
     }
 }

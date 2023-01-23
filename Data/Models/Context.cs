@@ -13,6 +13,7 @@ namespace Data.Models
     {
         public DbSet<Recipe> Recipes { get; set; }
         public DbSet<Ingredient> Ingredients { get; set; }
+        public DbSet<RecipeIngredient> RecipeIngredients { get; set; }
         public DbSet<SelectedRecipe> SelectedRecipes { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -32,7 +33,7 @@ namespace Data.Models
                 .Property(func)
                 .HasConversion(
                     v => v.ToString(),
-                    v => (UnitType)Enum.Parse(typeof(UnitType), v));
+                    v => UnitConverter.StrToType(v));
         }
     }
 }
