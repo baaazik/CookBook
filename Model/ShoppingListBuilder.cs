@@ -7,9 +7,17 @@ using System.Threading.Tasks;
 
 namespace Model
 {
+    /// <summary>
+    /// Составляет список покупок на основе выбранных рецептов
+    /// </summary>
     public class ShoppingListBuilder
     {
-        public static IList<RecipeItem> GetShoppingList(IList<BaseRecipe> menu)
+        /// <summary>
+        /// Получить список покупок
+        /// </summary>
+        /// <param name="menu">Список выбранных рецептов</param>
+        /// <returns>Список покупок</returns>
+        public static IList<RecipeItem> GetShoppingList(IList<SelectedRecipe> menu)
         {
             var ingredients = new Dictionary<Ingredient, uint>();
 

@@ -12,21 +12,21 @@ namespace Data
     public class DataSource : IDataSource
     {
         private Context ctx;
-        List<Model.Recipe.BaseRecipe> recipes;
+        List<Model.Recipe.Recipe> recipes;
         List<Model.Recipe.Ingredient> ingredients;
-        List<BaseRecipe> menu;
+        List<Model.Recipe.SelectedRecipe> menu;
 
         public DataSource()
         {
             ctx = new Context();
-            menu = new List<BaseRecipe>();
+            menu = new List<Model.Recipe.SelectedRecipe>();
         }
 
         /// <summary>
         /// Возращает меню - список выбранных рецептов
         /// </summary>
         /// <returns>Список выбранных рецептов</returns>
-        public IList<BaseRecipe> GetMenu()
+        public IList<Model.Recipe.SelectedRecipe> GetMenu()
         {
             return menu;
         }
@@ -35,13 +35,13 @@ namespace Data
         /// Возвращает список всех рецептов
         /// </summary>
         /// <returns>Список рецептов</returns>
-        public IReadOnlyList<BaseRecipe> GetRecipes()
+        public IReadOnlyList<Model.Recipe.Recipe> GetRecipes()
         {
             if (this.recipes != null)
                 return this.recipes;
 
             var dtoRecipes = ctx.Recipes.Include(x => x.Ingredients).ToList();
-            var recipes = new List<Model.Recipe.BaseRecipe>();
+            var recipes = new List<Model.Recipe.Recipe>();
 
             foreach(var dtoRecipe in dtoRecipes)
             {
@@ -54,7 +54,7 @@ namespace Data
         }
 
         // Создает рецепт
-        private SimpleRecipe CreateRecipe(Recipe dtoRecipe)
+        private Model.Recipe.Recipe CreateRecipe(Data.Models.Recipe dtoRecipe)
         {
             var unit = CreateUnit(dtoRecipe.UnitType);
             var amount = new Amount() { Unit = unit, Value = dtoRecipe.Amount };
@@ -67,7 +67,14 @@ namespace Data
                 ingredients.Add(item);
             }
 
-            var recipe = new Model.Recipe.SimpleRecipe(dtoRecipe.Id, dtoRecipe.Name, dtoRecipe.RecipeText, ingredients, amount);
+            var recipe = new Model.Recipe.Recipe() {
+                Id = dtoRecipe.Id, 
+                Name = dtoRecipe.Name,
+                RecipeText = dtoRecipe.RecipeText,
+                Ingredients = ingredients,
+                Amount = amount 
+            };
+
             return recipe;
         }
 

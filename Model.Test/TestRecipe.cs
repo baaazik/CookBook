@@ -6,14 +6,13 @@ using NUnit.Framework;
 
 namespace Tests
 {
-    // Тесты класса SimpleRecipe
-    class TestSimpleRecipe
+    abstract class BaseTestRecipe
     {
-        BaseUnit gr, pcs;
-        Ingredient ing1, ing2, ing3, ing4;
-        List<RecipeItem> ingredients;
+        protected BaseUnit gr, pcs;
+        protected Ingredient ing1, ing2, ing3, ing4;
+        protected List<RecipeItem> ingredients;
 
-        public TestSimpleRecipe()
+        public BaseTestRecipe()
         {
             //Создаем объекты ингредиентов, которые будут использоваться в рецепте
             gr = new Gramm();
@@ -31,7 +30,11 @@ namespace Tests
                 new RecipeItem(ing4, 1)
             };
         }
+    }
 
+    // Тесты класса SimpleRecipe
+    class TestRecipe : BaseTestRecipe
+    {
         // Тест на конструктор классса
         // Проверяет, что все свойства класса (название, описание итп) выставляются в конструкторе
         // и затем их можно корректно получить с помощью свойств
@@ -40,52 +43,18 @@ namespace Tests
         {
             // Создаем рецепт
             var amount = new Amount(pcs, 6);
-            var recipe = new SimpleRecipe(1, "Драники", "Какой-то текст", ingredients, amount);
+            var recipe = new Recipe() { Id = 1, Name = "Драники", RecipeText = "Какой-то текст", Amount = amount, Ingredients = ingredients };
             
             // Проверяем все свойства
             Assert.AreEqual("Драники", recipe.Name);
             Assert.AreEqual("Какой-то текст", recipe.RecipeText);
             Assert.AreEqual(ingredients, recipe.Ingredients);
-            Assert.AreEqual(amount, recipe.DefaultAmount);
             Assert.AreEqual(amount, recipe.Amount);
         }
+    }
 
-        // Тест на функцию SetAmount().
-        // Проверяет, что если изменить объем готового блюда, то свойство Amount возвращает
-        // корректное новое значение.
-        [Test]
-        public void TestSetAmount()
-        {
-            // Создаем рецепт
-            var amount = new Amount(pcs, 6);
-            var recipe = new SimpleRecipe(1, "Драники", "Какой-то текст", ingredients, amount);
-
-            // Изменим объем блюда
-            recipe.SetAmount(10);
-            Assert.AreEqual(amount, recipe.DefaultAmount);
-            Assert.AreEqual(new Amount(pcs, 10), recipe.Amount);
-        }
-
-        // Тест ан функцию ResetAmount().
-        // Проверяет, что если мы изменили объем готового блюда с помощью функции SetAmount, 
-        // с помощью функции ResetAmount объем сбрасывается на значение по-умолчанию
-        [Test]
-        public void TestResetAmount()
-        {
-            // Создаем рецепт
-            var amount = new Amount(pcs, 6);
-            var recipe = new SimpleRecipe(1, "Драники", "Какой-то текст", ingredients, amount);
-
-            // Изменим объем блюда
-            recipe.SetAmount(10);
-            Assert.AreEqual(amount, recipe.DefaultAmount);
-            Assert.AreEqual(new Amount(pcs, 10), recipe.Amount);
-
-            // Сбросим кол-во блюда на значение по-умолчанию
-            recipe.ResetAmount();
-            Assert.AreEqual(amount, recipe.DefaultAmount);
-            Assert.AreEqual(amount, recipe.Amount);
-        }
+    class TestSelectedRecipe : BaseTestRecipe
+    {
     
         // Тест на функцию GetIngredients
         // Проверяет, что когда объем готового блюда не менялся, кол-во ингредиентов осатлось
@@ -95,9 +64,10 @@ namespace Tests
         {
             // Создаем рецепт
             var amount = new Amount(pcs, 6);
-            var recipe = new SimpleRecipe(1, "Драники", "Какой-то текст", ingredients, amount);
-
-            CollectionAssert.AreEquivalent(ingredients, recipe.GetIngredients());
+            var recipe = new Recipe() { Id = 1, Name = "Драники", RecipeText = "Какой-то текст", Amount = amount, Ingredients = ingredients };
+            var selectedRecipe = new SelectedRecipe(1, recipe);
+               
+            CollectionAssert.AreEquivalent(ingredients, selectedRecipe.GetIngredients());
         }
 
         // Тест на функцию GetIngredients
@@ -107,10 +77,11 @@ namespace Tests
         {
             // Создаем рецепт
             var amount = new Amount(pcs, 6);
-            var recipe = new SimpleRecipe(1, "Драники", "Какой-то текст", ingredients, amount);
+            var recipe = new Recipe() { Id = 1, Name = "Драники", RecipeText = "Какой-то текст", Amount = amount, Ingredients = ingredients };
+            var selectedRecipe = new SelectedRecipe(1, recipe);
 
             // Изменим объем блюда
-            recipe.SetAmount(12);
+            selectedRecipe.SetAmount(12);
 
             // Ожидаемый новый объем всех ингредиентов
             var newIngredients = new List<RecipeItem>()
@@ -121,7 +92,7 @@ namespace Tests
                 new RecipeItem(ing4, 2)
             };
 
-            CollectionAssert.AreEquivalent(newIngredients, recipe.GetIngredients());
+            CollectionAssert.AreEquivalent(newIngredients, selectedRecipe.GetIngredients());
         }
 
         // Тест на функцию GetIngredients
@@ -131,10 +102,11 @@ namespace Tests
         {
             // Создаем рецепт
             var amount = new Amount(pcs, 6);
-            var recipe = new SimpleRecipe(1, "Драники", "Какой-то текст", ingredients, amount);
+            var recipe = new Recipe() { Id = 1, Name = "Драники", RecipeText = "Какой-то текст", Amount = amount, Ingredients = ingredients };
+            var selectedRecipe = new SelectedRecipe(1, recipe);
 
             // Изменим объем блюда
-            recipe.SetAmount(3);
+            selectedRecipe.SetAmount(3);
 
             // Ожидаемый новый объем всех ингредиентов
             var newIngredients = new List<RecipeItem>()
@@ -145,7 +117,7 @@ namespace Tests
                 new RecipeItem(ing4, 1)
             };
 
-            CollectionAssert.AreEquivalent(newIngredients, recipe.GetIngredients());
+            CollectionAssert.AreEquivalent(newIngredients, selectedRecipe.GetIngredients());
         }
     }
 }

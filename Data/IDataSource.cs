@@ -16,8 +16,12 @@ namespace Data
         /// Получить список рецептов
         /// </summary>
         /// <returns>Список рецептов</returns>
-        IReadOnlyList<BaseRecipe> GetRecipes();
+        IReadOnlyList<Recipe> GetRecipes();
 
-        IList<BaseRecipe> GetMenu();
+        /// <summary>
+        /// Получить список выбранных рецептов
+        /// </summary>
+        /// <returns></returns>
+        IList<SelectedRecipe> GetMenu();
     }
 }

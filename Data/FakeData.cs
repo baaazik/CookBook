@@ -12,14 +12,14 @@ namespace Data
     /// </summary>
     public class FakeData : IDataSource
     {
-        private List<BaseRecipe> recipes;
-        private List<BaseRecipe> menu;
+        private List<Recipe> recipes;
+        private List<SelectedRecipe> menu;
         private BaseUnit gr, ml, pcs;
 
         public FakeData()
-        { 
-            recipes = new List<BaseRecipe>();
-            menu = new List<BaseRecipe>();  
+        {
+            recipes = new List<Recipe>();
+            menu = new List<SelectedRecipe>();
 
             gr = new Gramm();
             ml = new Milliliter();
@@ -35,40 +35,40 @@ namespace Data
             var tomato = new Ingredient(8, "Помидор", pcs);
             var beans = new Ingredient(9, "Фасоль", gr);
 
-            recipes.Add(new SimpleRecipe(
-                1,
-                "Драники",
-                "Рецепт",
-                new List<RecipeItem>
+            recipes.Add(new Recipe {
+                Id = 1,
+                Name = "Драники",
+                RecipeText = "Рецепт",
+                Ingredients = new List<RecipeItem>
                 {
                     new RecipeItem(potato, 800),
                     new RecipeItem(flover, 50),
                     new RecipeItem(egg, 1),
                     new RecipeItem(onion, 1),
                 },
-                new Amount(pcs, 6)
-            ));
+                Amount = new Amount(pcs, 6)
+            });
 
-            recipes.Add(new SimpleRecipe(
-                2,
-                "Корм",
-                "Рецепт",
-                new List<RecipeItem>
+            recipes.Add(new Recipe {
+                Id = 2,
+                Name = "Корм",
+                RecipeText = "Рецепт",
+                Ingredients = new List<RecipeItem>
                 {
                     new RecipeItem(chicken, 800),
                     new RecipeItem(tomato, 4),
                     new RecipeItem(onion, 1),
                     new RecipeItem(beans, 300),
                 },
-                new Amount(pcs, 8)
-            ));
+                Amount = new Amount(pcs, 8)
+            });
         }
 
-        public IReadOnlyList<BaseRecipe> GetRecipes()
+        public IReadOnlyList<Recipe> GetRecipes()
         {
             return recipes;
         }
-        public IList<BaseRecipe> GetMenu()
+        public IList<SelectedRecipe> GetMenu()
         {
             return menu;
         }
