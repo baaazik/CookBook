@@ -27,11 +27,7 @@ namespace Data
         public IReadOnlyList<Model.Recipe.Recipe> GetRecipes()
         {
             var recipes = ctx.Recipes
-                .Select(r => new Model.Recipe.Recipe()
-                {
-                    Id = r.Id,
-                    Name = r.Name,
-                })
+                .Select(r => new RecipesBuidler().InitBase(r).Get())
                 .ToList();
 
             return recipes;
@@ -44,12 +40,7 @@ namespace Data
         {
             var recipes = ctx.Recipes
                 .Where(r => r.Categories.Any(c => c.Id == categoryId))
-                .Select(r => new Model.Recipe.Recipe()
-                {
-                    Id = r.Id,
-                    Name = r.Name,
-                    Amount = new Model.Recipe.Amount() { Unit = UnitConverter.TypeToUnit(r.UnitType), Value = r.Amount },
-                })
+                .Select(r => new RecipesBuidler().InitBase(r).InitAmount(r).Get())
                 .ToList();
             return recipes;
         }
@@ -76,25 +67,9 @@ namespace Data
             var recipe = ctx.Recipes
                 .Include(r => r.Ingredients)
                 .ThenInclude(i => i.Ingredient)
-                .Select(r => new Model.Recipe.Recipe()
-                {
-                    Id = r.Id,
-                    Name = r.Name,
-                    RecipeText = r.RecipeText,
-                    Amount = new Model.Recipe.Amount() { Unit = UnitConverter.TypeToUnit(r.UnitType), Value = r.Amount },
-                    Ingredients = r.Ingredients.Select(i => new Model.Recipe.RecipeItem()
-                    {
-                        Ingredient = new Model.Recipe.Ingredient()
-                        {
-                            Id = i.Ingredient.Id,
-                            Name = i.Ingredient.Name,
-                            Unit = UnitConverter.TypeToUnit(i.Ingredient.UnitType)
-                        },
-                        Amount = i.Amount
-                    })
-                    .ToList()
-                })
-                .FirstOrDefault(x => x.Id == id);
+                .Where(x => x.Id == id)
+                .Select(r => new RecipesBuidler().InitBase(r).InitAmount(r).InitText(r).InitIngredients(r).Get())
+                .FirstOrDefault();
             return recipe;
         }
     }
