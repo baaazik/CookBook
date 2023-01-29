@@ -56,4 +56,9 @@ namespace Data
             return UnitToType(unit).ToString();
         }
     }
+
+    internal abstract class AmountCreator
+    {
+        // public 
+    }
 }
