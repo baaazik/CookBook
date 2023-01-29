@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Model.Recipe
 {
+    /// <summary>
+    /// Категория рецепта
+    /// </summary>
     public class Category
     {
         public int Id { get; set; }

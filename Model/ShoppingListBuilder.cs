@@ -17,7 +17,7 @@ namespace Model
         /// </summary>
         /// <param name="menu">Список выбранных рецептов</param>
         /// <returns>Список покупок</returns>
-        public static IList<RecipeItem> GetShoppingList(IList<SelectedRecipe> menu)
+        public static IList<ShoppingItem> GetShoppingList(IList<SelectedRecipe> menu)
         {
             var ingredients = new Dictionary<Ingredient, uint>();
 
@@ -38,11 +38,15 @@ namespace Model
             }
 
             // Формируем список
-            var list = new List<RecipeItem>();
+            var list = new List<ShoppingItem>();
 
             foreach(var (key, value) in ingredients)
             {
-                list.Add(new RecipeItem() { Ingredient = key, Amount = value });
+                list.Add(new ShoppingItem()
+                {
+                    Ingredient = new RecipeItem() { Ingredient = key, Amount = value },
+                    IsBought = false
+                });
             }
 
             return list;
