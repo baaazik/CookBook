@@ -17,14 +17,22 @@ namespace Model
         /// </summary>
         /// <param name="menu">Список выбранных рецептов</param>
         /// <returns>Список покупок</returns>
-        public static IList<ShoppingItem> GetShoppingList(IList<SelectedRecipe> menu)
+        public static IList<ShoppingItem> GetShoppingList(
+            IList<SelectedRecipe> menu)
+        {
+            var ingredients = GetIngredients(menu);
+            var list = ConvertIngredientsToShoppingList(ingredients);
+            return list;
+        }
+
+        // Определям суммарное количество всех ингредиентов
+        private static Dictionary<Ingredient, uint> GetIngredients(
+            IList<SelectedRecipe> menu)
         {
             var ingredients = new Dictionary<Ingredient, uint>();
-
-            // Определям суммарное количество всех ингредиентов
-            foreach(var recipe in menu)
+            foreach (var recipe in menu)
             {
-                foreach(var ingredient in recipe.GetIngredients())
+                foreach (var ingredient in recipe.GetIngredients())
                 {
                     if (ingredients.ContainsKey(ingredient.Ingredient))
                     {
@@ -37,10 +45,15 @@ namespace Model
                 }
             }
 
+            return ingredients;
+        }
+
+        private static List<ShoppingItem> ConvertIngredientsToShoppingList(
+            Dictionary<Ingredient, uint> ingredients)
+        {
             // Формируем список
             var list = new List<ShoppingItem>();
-
-            foreach(var (key, value) in ingredients)
+            foreach (var (key, value) in ingredients)
             {
                 list.Add(new ShoppingItem()
                 {
