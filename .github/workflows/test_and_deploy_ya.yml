@@ -1,0 +1,40 @@
+name: Testing and deploying to Yandex Cloud
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 6.0.x
+      - name: Restore dependencies
+        run: dotnet restore
+      - name: Build
+        run: dotnet build --no-restore
+      - name: Test
+        run: dotnet test --no-build --verbosity normal
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Yandex Cloud login
+        uses: yc-actions/yc-cr-login@v1.2.0
+        with:
+          yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
+      - name: Build and push docker image to Cloud Container Registry
+        env:
+          CR_REGISTRY: crp9rb1cc8inn0qdue03
+          CR_REPO: my-cr-repo
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          docker build -t cr.yandex/$CR_REGISTRY/$CR_REPO:$IMAGE_TAG .
+          docker push cr.yandex/$CR_REGISTRY/$CR_REPO:$IMAGE_TAG
+
