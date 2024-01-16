@@ -8,21 +8,29 @@ on:
       - main
   workflow_dispatch:
 
+env:
+  WEBAPI_IMAGE: cr.yandex/crp9rb1cc8inn0qdue03/my-cr-repo:${{ github.sha }}
+  SSH_KEY: ${{ secrets.SSH_KEY }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Setup .NET
+      - name: Install .NET
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: 6.0.x
+      - name: Install Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
       - name: Restore dependencies
         run: dotnet restore
       - name: Build
-        run: dotnet build --no-restore
+        run: dotnet build --no-restore -c Release -o ./dist /p:UseAppHost=false
       - name: Test
-        run: dotnet test --no-build --verbosity normal
+        run: dotnet test --no-build --verbosity normal -o dist
       - name: Setup Docker Buildx
         uses: docker/setup-buildx-action@v3
       - name: Yandex Cloud login
@@ -30,11 +38,20 @@ jobs:
         with:
           yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
       - name: Build and push docker image to Cloud Container Registry
-        env:
-          CR_REGISTRY: crp9rb1cc8inn0qdue03
-          CR_REPO: my-cr-repo
-          IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker build -t cr.yandex/$CR_REGISTRY/$CR_REPO:$IMAGE_TAG .
-          docker push cr.yandex/$CR_REGISTRY/$CR_REPO:$IMAGE_TAG
+          docker build -t $WEBAPI_IMAGE .
+          docker push $WEBAPI_IMAGE
+      - name: Deploy COI VM
+        uses: yc-actions/yc-coi-deploy@v1.0.1
+        with:
+          yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
+          folder-id: b1gfc87tc2khu85rnenb
+          vm-name: cookbook-api
+          vm-service-account-id: default-sa
+          vm-cores: 2
+          vm-memory: 2Gb
+          vm-core-fraction: 20
+          vm-subnet-id: e2lnd82hsb6msvad6lmp
+          docker-compose-path: './yandex-cloud/docker-compose.yc.yaml'
+          user-data-path: './yandex-cloud/user-data.yaml'
 
