@@ -21,10 +21,10 @@ import { RouterLink } from 'vue-router'
     <header class="header">
         <nav class="navbar navbar-expand-sm bg-body-tertiary">
             <div class="container">
-                <a class="navbar-brand" href="#">
+                <RouterLink class="navbar-brand" to="/">
                     <img src="/images/icon.png"/>
                     Cookbook
-                </a>
+                </RouterLink>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                     aria-label="Toggle navigation">
@@ -36,10 +36,10 @@ import { RouterLink } from 'vue-router'
                             <RouterLink class="nav-link" to="/">Рецепты</RouterLink>
                         </li>
                         <li class="nav-item">
-                            <RouterLink class="nav-link" to="/">Меню</RouterLink>
+                            <RouterLink class="nav-link" to="/menu">Меню</RouterLink>
                         </li>
                         <li class="nav-item">
-                            <RouterLink class="nav-link" to="/">Список покупок</RouterLink>
+                            <RouterLink class="nav-link" to="/shoppinglist">Список покупок</RouterLink>
                         </li>
                     </ul>
                     <form class="d-flex" role="search">

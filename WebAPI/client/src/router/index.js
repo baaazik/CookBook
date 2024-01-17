@@ -1,13 +1,27 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import CategoriesView from '../views/CategoriesView.vue'
+import RecipesView from '../views/RecipesView.vue'
+import MenuView from '../views/MenuView.vue'
+import ShoppingListView from '../views/ShoppingListView.vue'
+import LoginView from '../views/LoginView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: CategoriesView
+      component: RecipesView
+    },
+    {
+      path: '/menu',
+      component: MenuView
+    },
+    {
+      path: '/shoppinglist',
+      component: ShoppingListView
+    },
+    {
+      path: '/login',
+      component: LoginView
     },
   ]
 })

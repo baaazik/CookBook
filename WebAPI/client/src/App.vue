@@ -1,8 +1,6 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
 import NavBar from './components/NavBar.vue'
-import CategoriesMenu from './components/CategoriesMenu.vue'
-import RecipesMenu from './components/RecipesMenu.vue'
 </script>
 
 <style lang="scss">
@@ -23,6 +21,5 @@ import RecipesMenu from './components/RecipesMenu.vue'
 
 <template>
     <NavBar />
-    <CategoriesMenu/>
-    <RecipesMenu/>
+    <RouterView/>
 </template>
