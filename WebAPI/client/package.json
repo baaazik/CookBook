@@ -15,8 +15,10 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.5.2",
+    "bulma": "^0.9.4",
     "eslint": "^8.49.0",
     "eslint-plugin-vue": "^9.17.0",
+    "sass": "^1.69.7",
     "vite": "^5.0.10",
     "vite-plugin-mkcert": "^1.17.2"
   }
