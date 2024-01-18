@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
@@ -6,12 +6,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Data.Models
+namespace Model.Model
 {
     /// <summary>
     /// Класс ингредиента
     /// </summary>
-    internal class Ingredient
+    public class Ingredient
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
@@ -25,6 +25,6 @@ namespace Data.Models
         /// <summary>
         /// Тип единицы измерения
         /// </summary>
-        public UnitType UnitType { get; set; }
+        public BaseUnit Unit { get; set; }
     }
 }

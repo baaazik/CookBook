@@ -1,4 +1,5 @@
-﻿using Data.Models;
+using Data.Models;
+using Model.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -24,7 +25,7 @@ namespace Data
         /// <summary>
         /// Получить все рецепты
         /// </summary>
-        public IReadOnlyList<Model.Recipe.Recipe> GetRecipes()
+        public IReadOnlyList<Recipe> GetRecipes()
         {
             var recipes = ctx.Recipes
                 .Select(r => new RecipesBuidler().InitBase(r).Get())
@@ -36,7 +37,7 @@ namespace Data
         /// <summary>
         /// Получить рецепты в категории
         /// </summary>
-        public IReadOnlyList<Model.Recipe.Recipe> GetRecipes(int categoryId)
+        public IReadOnlyList<Recipe> GetRecipes(int categoryId)
         {
             var recipes = ctx.Recipes
                 .Where(r => r.Categories.Any(c => c.Id == categoryId))
@@ -48,10 +49,10 @@ namespace Data
         /// <summary>
         /// Получить список категорий
         /// </summary>
-        public IReadOnlyList<Model.Recipe.Category> GetCategories()
+        public IReadOnlyList<Category> GetCategories()
         {
             return ctx.Categories
-                .Select(c => new Model.Recipe.Category()
+                .Select(c => new Category()
                 {
                     Id = c.Id,
                     Name = c.Name,
@@ -62,7 +63,7 @@ namespace Data
         /// <summary>
         /// Получить рецепт по Id
         /// </summary>
-        public Model.Recipe.Recipe GetRecipe(int id)
+        public Recipe GetRecipe(int id)
         {
             var recipe = ctx.Recipes
                 .Include(r => r.Ingredients)

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Identity;
 using WebUI.Areas.Identity.Data;
-using Model.Recipe;
+using Model.Model;
 
 namespace WebUI.Pages
 {
@@ -13,7 +13,7 @@ namespace WebUI.Pages
         private readonly UserManager<WebUser> _userManager;
 
         public IList<SelectedRecipe> Recipes { get; set; }
-        
+
         public SelectedRecipesModel(IDataSource data, UserManager<WebUser> userManager)
         {
             _data = data;

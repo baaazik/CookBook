@@ -1,4 +1,5 @@
-﻿using Data.Models;
+using Data.Models;
+using Model.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -27,7 +28,7 @@ namespace Data
         /// Возвращает список всех рецептов
         /// </summary>
         /// <returns>Список рецептов</returns>
-        public IReadOnlyList<Model.Recipe.Recipe> GetRecipes()
+        public IReadOnlyList<Recipe> GetRecipes()
         {
             return recipesRepository.GetRecipes();
         }
@@ -35,7 +36,7 @@ namespace Data
         /// <summary>
         /// Получить рецепты в категории
         /// </summary>
-        public IReadOnlyList<Model.Recipe.Recipe> GetRecipes(int categoryId)
+        public IReadOnlyList<Recipe> GetRecipes(int categoryId)
         {
             return recipesRepository.GetRecipes(categoryId);
         }
@@ -43,7 +44,7 @@ namespace Data
         /// <summary>
         /// Получить список категорий
         /// </summary>
-        public IReadOnlyList<Model.Recipe.Category> GetCategories()
+        public IReadOnlyList<Category> GetCategories()
         {
             return recipesRepository.GetCategories();
         }
@@ -51,7 +52,7 @@ namespace Data
         /// <summary>
         /// Получить рецепт по Id
         /// </summary>
-        public Model.Recipe.Recipe GetRecipe(int id)
+        public Recipe GetRecipe(int id)
 		{
             return recipesRepository.GetRecipe(id);
 		}
@@ -60,7 +61,7 @@ namespace Data
         /// Возвращает список ингредиентов
         /// </summary>
         /// <returns>Список ингредиентов</returns>
-        public IReadOnlyList<Model.Recipe.Ingredient> GetIngredients()
+        public IReadOnlyList<Ingredient> GetIngredients()
         {
             return ingredientsRepository.GetIngredients();
         }
@@ -69,7 +70,7 @@ namespace Data
         /// Возращает меню - список выбранных рецептов
         /// </summary>
         /// <returns>Список выбранных рецептов</returns>
-        public IList<Model.Recipe.SelectedRecipe> GetMenu(string userId)
+        public IList<SelectedRecipe> GetMenu(string userId)
         {
             return menuRepository.GetMenu(userId);
         }

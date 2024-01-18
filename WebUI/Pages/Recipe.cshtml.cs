@@ -2,7 +2,7 @@ using Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Model.Recipe;
+using Model.Model;
 using WebUI.Areas.Identity.Data;
 
 namespace WebUI.Pages

@@ -1,16 +1,32 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
-using Model.Recipe;
+using Model.Model;
 using NUnit.Framework;
+using NUnit.Framework.Constraints;
 
 namespace Tests
 {
+    class RecipeIngredientsComparer : IEqualityComparer<RecipeIngredient>
+    {
+        public bool Equals(RecipeIngredient x, RecipeIngredient y)
+        {
+            return x.Ingredient == y.Ingredient &&
+                   x.Amount == y.Amount;
+        }
+
+        public int GetHashCode([DisallowNull] RecipeIngredient obj)
+        {
+            return obj.GetHashCode();
+        }
+    }
+
     abstract class BaseTestRecipe
     {
         protected BaseUnit gr, pcs;
         protected Ingredient ing1, ing2, ing3, ing4;
-        protected List<RecipeItem> ingredients;
+        protected List<RecipeIngredient> ingredients;
 
         public BaseTestRecipe()
         {
@@ -22,12 +38,12 @@ namespace Tests
             ing3 = new Ingredient() { Id = 3, Name = "Яйцо куриное", Unit = pcs };
             ing4 = new Ingredient() { Id = 4, Name = "Лук", Unit = pcs };
 
-            ingredients = new List<RecipeItem>()
+            ingredients = new List<RecipeIngredient>()
             {
-                new RecipeItem(){ Ingredient = ing1, Amount = 800 },
-                new RecipeItem() { Ingredient = ing2, Amount = 50 },
-                new RecipeItem() { Ingredient = ing3, Amount = 1 },
-                new RecipeItem() { Ingredient = ing4, Amount = 1 }
+                new RecipeIngredient(){ Ingredient = ing1, Amount = 800 },
+                new RecipeIngredient() { Ingredient = ing2, Amount = 50 },
+                new RecipeIngredient() { Ingredient = ing3, Amount = 1 },
+                new RecipeIngredient() { Ingredient = ing4, Amount = 1 }
             };
         }
     }
@@ -42,20 +58,26 @@ namespace Tests
         public void TestContstructor()
         {
             // Создаем рецепт
-            var amount = new Amount(pcs, 6);
-            var recipe = new Recipe() { Id = 1, Name = "Драники", RecipeText = "Какой-то текст", Amount = amount, Ingredients = ingredients };
-            
+            var recipe = new Recipe() {
+                Id = 1,
+                Name = "Драники",
+                RecipeText = "Какой-то текст",
+                Amount = 6,
+                Unit = pcs,
+                Ingredients = ingredients };
+
             // Проверяем все свойства
             Assert.AreEqual("Драники", recipe.Name);
             Assert.AreEqual("Какой-то текст", recipe.RecipeText);
             Assert.AreEqual(ingredients, recipe.Ingredients);
-            Assert.AreEqual(amount, recipe.Amount);
+            Assert.AreEqual(6, recipe.Amount);
+            Assert.AreEqual(pcs, recipe.Unit);
         }
     }
 
     class TestSelectedRecipe : BaseTestRecipe
     {
-    
+
         // Тест на функцию GetIngredients
         // Проверяет, что когда объем готового блюда не менялся, кол-во ингредиентов осатлось
         // таким же, как было в рецепте
@@ -63,11 +85,21 @@ namespace Tests
         public void TestGetIngredientsNoChange()
         {
             // Создаем рецепт
-            var amount = new Amount(pcs, 6);
-            var recipe = new Recipe() { Id = 1, Name = "Драники", RecipeText = "Какой-то текст", Amount = amount, Ingredients = ingredients };
-            var selectedRecipe = new SelectedRecipe(1, recipe);
-               
-            CollectionAssert.AreEquivalent(ingredients, selectedRecipe.GetIngredients());
+            var recipe = new Recipe()
+            {
+                Id = 1,
+                Name = "Драники",
+                RecipeText = "Какой-то текст",
+                Amount = 6,
+                Unit = pcs,
+                Ingredients = ingredients
+            };
+
+            var selectedRecipe = new SelectedRecipe(recipe);
+
+            Assert.That(selectedRecipe.GetIngredients(),
+                new CollectionEquivalentConstraint(ingredients)
+                .Using(new RecipeIngredientsComparer()));
         }
 
         // Тест на функцию GetIngredients
@@ -76,23 +108,33 @@ namespace Tests
         public void TestGetIngredientsIncrease()
         {
             // Создаем рецепт
-            var amount = new Amount(pcs, 6);
-            var recipe = new Recipe() { Id = 1, Name = "Драники", RecipeText = "Какой-то текст", Amount = amount, Ingredients = ingredients };
-            var selectedRecipe = new SelectedRecipe(1, recipe);
-
-            // Изменим объем блюда
-            selectedRecipe.SetAmount(12);
-
-            // Ожидаемый новый объем всех ингредиентов
-            var newIngredients = new List<RecipeItem>()
+            var recipe = new Recipe()
             {
-                new RecipeItem() { Ingredient = ing1, Amount = 1600 },
-                new RecipeItem() { Ingredient = ing2, Amount = 100 },
-                new RecipeItem() { Ingredient = ing3, Amount = 2 },
-                new RecipeItem() { Ingredient = ing4, Amount = 2 }
+                Id = 1,
+                Name = "Драники",
+                RecipeText = "Какой-то текст",
+                Amount = 6,
+                Unit = pcs,
+                Ingredients = ingredients
             };
 
-            CollectionAssert.AreEquivalent(newIngredients, selectedRecipe.GetIngredients());
+            var selectedRecipe = new SelectedRecipe(recipe);
+
+            // Изменим объем блюда
+            selectedRecipe.Amount = 12;
+
+            // Ожидаемый новый объем всех ингредиентов
+            var newIngredients = new List<RecipeIngredient>()
+            {
+                new RecipeIngredient() { Ingredient = ing1, Amount = 1600 },
+                new RecipeIngredient() { Ingredient = ing2, Amount = 100 },
+                new RecipeIngredient() { Ingredient = ing3, Amount = 2 },
+                new RecipeIngredient() { Ingredient = ing4, Amount = 2 }
+            };
+
+Assert.That(selectedRecipe.GetIngredients(),
+                new CollectionEquivalentConstraint(newIngredients)
+                .Using(new RecipeIngredientsComparer()));
         }
 
         // Тест на функцию GetIngredients
@@ -101,23 +143,33 @@ namespace Tests
         public void TestGetIngredientsDecrease()
         {
             // Создаем рецепт
-            var amount = new Amount(pcs, 6);
-            var recipe = new Recipe() { Id = 1, Name = "Драники", RecipeText = "Какой-то текст", Amount = amount, Ingredients = ingredients };
-            var selectedRecipe = new SelectedRecipe(1, recipe);
-
-            // Изменим объем блюда
-            selectedRecipe.SetAmount(3);
-
-            // Ожидаемый новый объем всех ингредиентов
-            var newIngredients = new List<RecipeItem>()
+            var recipe = new Recipe()
             {
-                new RecipeItem() { Ingredient = ing1, Amount = 400 },
-                new RecipeItem() { Ingredient = ing2, Amount = 25 },
-                new RecipeItem() { Ingredient = ing3, Amount = 1 },
-                new RecipeItem() { Ingredient = ing4, Amount = 1 } 
+                Id = 1,
+                Name = "Драники",
+                RecipeText = "Какой-то текст",
+                Amount = 6,
+                Unit = pcs,
+                Ingredients = ingredients
             };
 
-            CollectionAssert.AreEquivalent(newIngredients, selectedRecipe.GetIngredients());
+            var selectedRecipe = new SelectedRecipe(recipe);
+
+            // Изменим объем блюда
+            selectedRecipe.Amount = 3;
+
+            // Ожидаемый новый объем всех ингредиентов
+            var newIngredients = new List<RecipeIngredient>()
+            {
+                new RecipeIngredient() { Ingredient = ing1, Amount = 400 },
+                new RecipeIngredient() { Ingredient = ing2, Amount = 25 },
+                new RecipeIngredient() { Ingredient = ing3, Amount = 1 },
+                new RecipeIngredient() { Ingredient = ing4, Amount = 1 }
+            };
+
+            Assert.That(selectedRecipe.GetIngredients(),
+                new CollectionEquivalentConstraint(newIngredients)
+                .Using(new RecipeIngredientsComparer()));
         }
     }
 }

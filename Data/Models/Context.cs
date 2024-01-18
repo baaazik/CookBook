@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Collections.Generic;
@@ -6,6 +6,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using Model.Model;
 
 namespace Data.Models
 {
@@ -34,16 +35,17 @@ namespace Data.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            SetupConversion<Ingredient>(modelBuilder, x => x.UnitType);
-            SetupConversion<Recipe>(modelBuilder, x => x.UnitType);           
+            SetupConversion<Ingredient>(modelBuilder, x => x.Unit);
+            SetupConversion<Recipe>(modelBuilder, x => x.Unit);
         }
 
-        private void SetupConversion<T>(ModelBuilder builder, Expression<Func<T, UnitType>> func) where T: class
+        // Настройка преобразования типов при сохранении в БД
+        private void SetupConversion<T>(ModelBuilder builder, Expression<Func<T, BaseUnit>> func) where T: class
         {
             builder.Entity<T>()
                 .Property(func)
                 .HasConversion(
-                    v => v.ToString(),
+                    v => UnitConverter.TypeToStr(v),
                     v => UnitConverter.StrToType(v));
         }
     }

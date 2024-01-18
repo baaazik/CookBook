@@ -1,64 +1,47 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Data.Models;
-using Model.Recipe;
+using Model.Model;
 
 namespace Data
 {
     /// <summary>
-    /// Преобразует тип единицы измерения из БД (enum) в классы Unit и Amount
+    /// Преобразует тип единицы измерения из БД (enum) в дочерние классы BaseUnit
     /// </summary>
     internal static class UnitConverter
     {
-        public static BaseUnit TypeToUnit(UnitType type)
+        const string GRAMM = "gramm";
+        const string MILLILITER = "milliliter";
+        const string PIECE = "piece";
+
+        public static BaseUnit StrToType(string type)
         {
             switch (type)
             {
-                case UnitType.GRAMM:
+                case GRAMM:
                     return new Gramm();
-                case UnitType.MILLILITER:
+                case MILLILITER:
                     return new Milliliter();
-                case UnitType.PIECE:
+                case PIECE:
                     return new Piece();
                 default:
                     throw new ArgumentException();
             }
         }
 
-        public static UnitType StrToType(string str)
-        {
-            return (UnitType)Enum.Parse(typeof(UnitType), str);
-        }
-
-        public static BaseUnit StrToUnit(string str)
-        {
-            return TypeToUnit(StrToType(str));
-        }
-
-        public static UnitType UnitToType(BaseUnit unit)
+        public static string TypeToStr(BaseUnit unit)
         {
             // Долбанная рефлексия
             if (unit.GetType() == typeof(Gramm))
-                return UnitType.GRAMM;
+                return GRAMM;
             if (unit.GetType() == typeof(Milliliter))
-                return UnitType.MILLILITER;
+                return MILLILITER;
             if (unit.GetType() == typeof(Piece))
-                return UnitType.PIECE;
+                return PIECE;
 
             throw new ArgumentException();
         }
-
-        public static string UnitToStr(BaseUnit unit)
-        {
-            return UnitToType(unit).ToString();
-        }
-    }
-
-    internal abstract class AmountCreator
-    {
-        // public 
     }
 }

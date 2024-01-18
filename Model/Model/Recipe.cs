@@ -1,17 +1,13 @@
-﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Data.Models
+namespace Model.Model
 {
     /// <summary>
     /// Класс рецепта
     /// </summary>
-    internal class Recipe
+    public class Recipe
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
@@ -30,7 +26,7 @@ namespace Data.Models
         /// <summary>
         /// Тип единицы измерения для кол-ва готового блюда
         /// </summary>
-        public UnitType UnitType { get; set; }
+        public BaseUnit Unit { get; set; }
 
         /// <summary>
         /// Объем готового блюда
@@ -42,6 +38,11 @@ namespace Data.Models
         /// </summary>
         public virtual ICollection<RecipeIngredient> Ingredients { get; set;} = new List<RecipeIngredient>();
         public virtual ICollection<Category> Categories { get; set; } = new List<Category>();
+
+        public override string ToString()
+        {
+            return $"{Name} ({Amount} {Unit})";
+        }
 
     }
 }

@@ -1,4 +1,5 @@
-﻿using Data.Models;
+using Data.Models;
+using Model.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,20 +23,21 @@ namespace Data
         /// <summary>
         /// Возращает меню - список выбранных рецептов
         /// </summary>
-        public IList<Model.Recipe.SelectedRecipe> GetMenu(string userId)
+        public IList<SelectedRecipe> GetMenu(string userId)
         {
             var recipes = ctx.SelectedRecipes
                 .Where(r => r.UserId == userId)
-                .Select(r => new Model.Recipe.SelectedRecipe()
+                .Select(r => new SelectedRecipe()
                 {
                     Id = r.Id,
-                    Recipe = new Model.Recipe.Recipe()
+                    Recipe = new Recipe()
                     {
                         Id = r.Recipe.Id,
                         Name = r.Recipe.Name,
-                        Amount = new Model.Recipe.Amount() { Unit = UnitConverter.TypeToUnit(r.Recipe.UnitType), Value = r.Recipe.Amount },
+                        Amount = r.Recipe.Amount,
+                        Unit = r.Recipe.Unit
                     },
-                    Amount = new Model.Recipe.Amount() { Unit = UnitConverter.TypeToUnit(r.Recipe.UnitType), Value = r.Amount },
+                    Amount = r.Amount
                 })
                 .ToList();
             return recipes;

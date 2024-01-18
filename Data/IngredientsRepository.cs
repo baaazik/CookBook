@@ -1,4 +1,5 @@
-﻿using Data.Models;
+using Data.Models;
+using Model.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,16 +24,10 @@ namespace Data
         /// <summary>
         /// Получить список всех ингредиентов
         /// </summary>
-        public IReadOnlyList<Model.Recipe.Ingredient> GetIngredients()
+        public IReadOnlyList<Ingredient> GetIngredients()
         {
 
             var ingredients = ctx.Ingredients
-                .Select(i => new Model.Recipe.Ingredient()
-                {
-                    Id = i.Id,
-                    Name = i.Name,
-                    Unit = UnitConverter.TypeToUnit(i.UnitType)
-                })
                 .ToList();
 
             return ingredients;

@@ -1,7 +1,7 @@
 using Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Model.Recipe;
+using Model.Model;
 
 namespace WebUI.Pages
 {

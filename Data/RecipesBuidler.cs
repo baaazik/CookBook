@@ -1,4 +1,4 @@
-﻿using Data.Models;
+using Model.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,13 +12,13 @@ namespace Data
         T Get();
     }
 
-    internal class RecipesBuidler : IBuilder<Model.Recipe.Recipe>
+    internal class RecipesBuidler : IBuilder<Recipe>
     {
-        private Model.Recipe.Recipe recipe;
+        private Recipe recipe;
 
         public RecipesBuidler()
         {
-            recipe = new Model.Recipe.Recipe();
+            recipe = new Recipe();
         }
 
         public RecipesBuidler InitBase(Recipe dto)
@@ -30,7 +30,8 @@ namespace Data
 
         public RecipesBuidler InitAmount(Recipe dto)
         {
-            recipe.Amount = new Model.Recipe.Amount() { Unit = UnitConverter.TypeToUnit(dto.UnitType), Value = dto.Amount };
+            recipe.Amount = dto.Amount;
+            recipe.Unit = dto.Unit;
             return this;
         }
 
@@ -42,13 +43,13 @@ namespace Data
 
         public RecipesBuidler InitIngredients(Recipe dto)
         {
-            recipe.Ingredients = dto.Ingredients.Select(i => new Model.Recipe.RecipeItem()
+            recipe.Ingredients = dto.Ingredients.Select(i => new RecipeIngredient()
                 {
-                    Ingredient = new Model.Recipe.Ingredient()
+                    Ingredient = new Ingredient()
                     {
                         Id = i.Ingredient.Id,
                         Name = i.Ingredient.Name,
-                        Unit = UnitConverter.TypeToUnit(i.Ingredient.UnitType)
+                        Unit = i.Ingredient.Unit,
                     },
                     Amount = i.Amount
                 }).ToList();
@@ -56,7 +57,7 @@ namespace Data
             return this;
         }
 
-        public Model.Recipe.Recipe Get()
+        public Recipe Get()
         {
             return recipe;
         }

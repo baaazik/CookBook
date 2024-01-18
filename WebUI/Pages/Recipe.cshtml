@@ -1,4 +1,4 @@
-﻿@page
+@page
 @model WebUI.Pages.RecipeModel
 @{
     ViewData["Title"] = Model.Recipe.Name;
@@ -15,10 +15,10 @@
         <div class="form-group row">
             <label class="col-2">Количество</label>
             <div class="col-8">
-                <input type="number" class="form-control" name="amount" value="@Model.Recipe.Amount.Value">
+                <input type="number" class="form-control" name="amount" value="@Model.Recipe.Amount">
             </div>
             <label class="col-2">
-                @Model.Recipe.Amount.Unit.ToString()
+                @Model.Recipe.Unit.ToString()
             </label>
         </div>
         <input type="hidden" name="recipeId" value="@Model.Recipe.Id"/>

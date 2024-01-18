@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Model.Recipe;
+using Model.Model;
 using NUnit.Framework;
 
 namespace Tests

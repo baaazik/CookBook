@@ -1,19 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Data.Models
+namespace Model.Model
 {
     /// <summary>
     /// Связь рецептов и ингредиентов
     /// </summary>
     [PrimaryKey(nameof(RecipeId), nameof(IngredientId))]
-    internal class RecipeIngredient
+    public class RecipeIngredient
     {
         public int RecipeId { get; set; }
         [ForeignKey(nameof(RecipeId))]
@@ -24,5 +18,10 @@ namespace Data.Models
         public virtual Ingredient Ingredient { get; set; }
 
         public uint Amount { get; set; }
+
+        public override string ToString()
+        {
+            return $"{Ingredient.Name} ({Amount} {Ingredient.Unit})";
+        }
     }
 }

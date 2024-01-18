@@ -1,4 +1,5 @@
-﻿using Model.Recipe;
+using Model.Model;
+using Model.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -57,7 +58,8 @@ namespace Model
             {
                 list.Add(new ShoppingItem()
                 {
-                    Ingredient = new RecipeItem() { Ingredient = key, Amount = value },
+                    Ingredient = key,
+                    Amount = value,
                     IsBought = false
                 });
             }

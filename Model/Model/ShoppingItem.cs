@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Model.Recipe;
 
-namespace Data.Models
+namespace Model.Model
 {
     /// <summary>
     /// Эоемент списка покупок
     /// </summary>
-    internal class ShoppingItem
+    public class ShoppingItem
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
@@ -26,13 +20,13 @@ namespace Data.Models
         /// Ингредиент куплен
         /// </summary>
         [Required]
-        bool IsBought { get; set; }
+        public bool IsBought { get; set; }
 
         /// <summary>
         /// Количество ингредиента
         /// </summary>
         [Required]
-        uint Amount { get; set; }
+        public uint Amount { get; set; }
 
         /// <summary>
         /// Ингредиент

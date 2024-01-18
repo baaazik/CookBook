@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using System;
 
-namespace Model.Recipe
+namespace Model.Model
 {
     /// <summary>
     /// Базовый класс единицы измерения количества ингредиентов.
