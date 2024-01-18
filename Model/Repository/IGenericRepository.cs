@@ -20,6 +20,7 @@ namespace Model.Repository
         void Remove(TEntity entity);
         void RemoveById(TId id);
         TEntity? FindById(TId id);
+        public TEntity? Query(Func<TEntity, bool> predicate);
         void Save();
     }
 }

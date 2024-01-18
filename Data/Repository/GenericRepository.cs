@@ -38,6 +38,11 @@ namespace Data.Repository
                 EqualityComparer<TId>.Default.Equals(x.Id, id));
         }
 
+        public TEntity? Query(Func<TEntity, bool> predicate)
+        {
+            return _dbSet.Where(predicate).FirstOrDefault();
+        }
+
         public void Remove(TEntity entity)
         {
             _dbSet.Remove(entity);

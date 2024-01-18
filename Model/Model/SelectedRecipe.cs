@@ -57,8 +57,11 @@ namespace Model.Model
             // Масштабируем количество всех ингредиентов
             foreach (var ingredient in Recipe.Ingredients)
             {
-                var scaledValue = ingredient.Ingredient.Unit.ChangeAmount(ingredient.Amount, gain);
-                var scaledIngredient = new RecipeIngredient() { Ingredient = ingredient.Ingredient, Amount = scaledValue };
+                var scaledValue = ingredient.Ingredient.Unit
+                    .ChangeAmount(ingredient.Amount, gain);
+                var scaledIngredient = new RecipeIngredient() {
+                    Ingredient = ingredient.Ingredient,
+                    Amount = scaledValue };
                 ingredients.Add(scaledIngredient);
             }
 
