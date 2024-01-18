@@ -6,7 +6,7 @@ namespace Model.Model
     /// <summary>
     /// Эоемент списка покупок
     /// </summary>
-    public class ShoppingItem
+    public class ShoppingItem : IEntity<int>
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }

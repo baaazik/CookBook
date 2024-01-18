@@ -10,7 +10,7 @@ using Model.Model;
 
 namespace Data.Models
 {
-    internal class Context : DbContext
+    public class Context : DbContext
     {
         private string _sqlConnectionString = "Server=(localdb)\\mssqllocaldb;Database=sema_Data;Trusted_Connection=True;MultipleActiveResultSets=true";
         private string _sqliteConnectionString = "Data Source=D:\\recipes_data.db";
@@ -40,7 +40,7 @@ namespace Data.Models
         }
 
         // Настройка преобразования типов при сохранении в БД
-        private void SetupConversion<T>(ModelBuilder builder, Expression<Func<T, BaseUnit>> func) where T: class
+        private void SetupConversion<T>(ModelBuilder builder, Expression<Func<T, BaseUnit>> func) where T : class
         {
             builder.Entity<T>()
                 .Property(func)

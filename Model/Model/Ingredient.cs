@@ -11,7 +11,7 @@ namespace Model.Model
     /// <summary>
     /// Класс ингредиента
     /// </summary>
-    public class Ingredient
+    public class Ingredient : IEntity<int>
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }

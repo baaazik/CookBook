@@ -6,7 +6,7 @@ namespace Model.Model
     /// <summary>
     /// Пользователь
     /// </summary>
-    public class User
+    public class User : IEntity<string>
     {
         [Key]
         [Required]

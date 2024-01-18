@@ -7,7 +7,7 @@ namespace Model.Model
     /// <summary>
     /// Рецепт, выбранный для приготовления
     /// </summary>
-    public class SelectedRecipe
+    public class SelectedRecipe : IEntity<int>
     {
         public SelectedRecipe() { }
         public SelectedRecipe(Recipe recipe)

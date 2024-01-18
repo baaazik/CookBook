@@ -11,7 +11,7 @@ namespace Model.Model
     /// <summary>
     /// Категория рецептов
     /// </summary>
-    public class Category
+    public class Category : IEntity<int>
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }

@@ -7,7 +7,7 @@ namespace Model.Model
     /// <summary>
     /// Класс рецепта
     /// </summary>
-    public class Recipe
+    public class Recipe : IEntity<int>
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
